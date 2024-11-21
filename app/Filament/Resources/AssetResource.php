@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\AssetTypeEnum;
 use App\Filament\Resources\AssetResource\Pages;
 use App\Filament\Resources\AssetResource\RelationManagers;
 use App\Models\Asset;
@@ -51,18 +52,17 @@ class AssetResource extends Resource
                     ->label('')
                     ->size(20),
                 Tables\Columns\TextColumn::make('name')
-                    ->formatStateUsing(fn($record) => $record->name . " (" . strtoupper($record->symbol) .")")
+                    ->formatStateUsing(fn($record) => $record->name . " (" . strtoupper($record->symbol) . ")")
                     ->description(fn($record) => $record->description)
                     ->searchable(),
-                Tables\Columns\ToggleColumn::make('active')
+                Tables\Columns\TextInputColumn::make('address')->hidden(),
+                Tables\Columns\ToggleColumn::make('active'),
             ])
             ->filters([
                 Tables\Filters\Filter::make('type')
             ])
-            ->actions([
-            ])
-            ->bulkActions([
-            ]);
+            ->actions([])
+            ->bulkActions([]);
     }
 
     public static function getRelations(): array
