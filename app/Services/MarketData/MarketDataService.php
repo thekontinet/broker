@@ -2,7 +2,9 @@
 
 namespace App\Services\MarketData;
 
+use App\Models\Asset;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class MarketDataService
@@ -15,10 +17,27 @@ class MarketDataService
         //
     }
 
-    public function getPrice(string $currency, string $market)
+    public function getPrice(string $id): float
     {
-        $response = Http::get("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=BTC&market=EUR&apikey=demo");
-        return $response->json("Time Series (Digital Currency Daily)");
+        $prices = $this->getMarketInfo();
+        return $prices[$id]['current_price'];
+    }
+
+    public function getMarketInfo()
+    {
+        $coinIdsCollection = Asset::query()->pluck('uid');
+        $ids = $coinIdsCollection->join(',');
+        $key = md5($ids);
+        $data =  Cache::remember("coin-market-$key", now()->addMinute(), function () use ($ids) {
+            $response = Http::get("https://api.coingecko.com/api/v3/coins/markets?ids=$ids&vs_currency=USD");
+            $response->throw();
+            return $response->json();
+        });
+
+        return collect($data)->reduce(function($acc, $data){
+            $acc[$data['id']] = $data;
+            return $acc;
+        }, []);
     }
 
     public function getMarketList(): Collection

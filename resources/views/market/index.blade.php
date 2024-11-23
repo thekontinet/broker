@@ -16,10 +16,10 @@
         </div>
     </header>
 
-    <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+    <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 overflow-hidden">
         @foreach($assets as $asset)
-            <div class="flex items-center py-4">
-                <div class="flex relative">
+            <div class="flex items-center py-4 hover:bg-neutral-800 p-4 md:p-5 rounded">
+                <div class="flex flex-1 relative">
                     <img src="{{ $asset->image }}" alt="logo" class="w-8 h-8 me-2 rounded-full">
                     <div class="relative">
                         <h4 class="font-medium text-sm dark:text-gray-100">{{ $asset->name }}</h4>
@@ -27,10 +27,13 @@
                     </div>
                     <a href="{{ route('markets.show', $asset) }}" class="absolute inset-0"></a>
                 </div>
-                <div class="flex-1"></div>
-                <div>
-                    <p class="text-sm dark:text-gray-100">$40.00</p>
-                    <p class="text-red-500 text-xs">-0.30%</p>
+
+                <div class="max-w-[100px] ms-autos">
+                    <p class="text-sm dark:text-gray-100">{{ money($asset->price ?? 0) }}</p>
+                    <p class="{{($asset->price_change_percentage24h >= 0) ? 'text-green-500' : 'text-red-500'}} text-xs">
+                        {{($asset->price_change_percentage24h >= 0) ? '+' : '-'}}
+                        {{ number_format(abs($asset->price_change_percentage24h), 2) }}%
+                    </p>
                 </div>
             </div>
         @endforeach

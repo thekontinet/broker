@@ -3,15 +3,18 @@
 namespace App\Models;
 
 use App\Enums\AssetTypeEnum;
+use App\Models\Concerns\HasMarketData;
+use App\Services\MarketData\MarketDataService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Asset extends Model
 {
     /** @use HasFactory<\Database\Factories\AssetFactory> */
-    use HasFactory;
+    use HasFactory, HasMarketData;
 
     protected $guarded = [];
 
@@ -24,11 +27,29 @@ class Asset extends Model
         ];
     }
 
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->resolveRouteBindingQuery($this, $value, $field)
+            ->where('active', true)
+            ->firstOrFail();
+    }
+
+    public function canRecieveDeposit()
+    {
+        $symbol = strtoupper($this->symbol);
+        return config("money.currencies.$symbol") ? true : false;
+    }
+
     public function image(): Attribute
     {
         return new Attribute(
             get: fn () => $this->meta['image']
         );
+    }
+
+    public function getTradeSymbol()
+    {
+        return "BINANCE:" . strtoupper($this->symbol) . "USDT";
     }
 
     public function scopeActive(Builder $query)

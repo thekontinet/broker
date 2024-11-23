@@ -19,6 +19,7 @@ Artisan::command('assets:sync', function (\App\Services\MarketData\MarketDataSer
             'type' => 'crypto',
         ], [
             'name' => $marketData['name'],
+            'precision' => config("money.currencies." . strtoupper($marketData['symbol']) . ".precision", 2),
             'symbol' => $marketData['symbol'],
             'meta' => $marketData['meta'],
         ]);

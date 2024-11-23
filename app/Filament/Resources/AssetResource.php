@@ -54,6 +54,9 @@ class AssetResource extends Resource
                     ->formatStateUsing(fn($record) => $record->name . " (" . strtoupper($record->symbol) .")")
                     ->description(fn($record) => $record->description)
                     ->searchable(),
+                Tables\Columns\TextInputColumn::make('meta.wallet_address')
+                    ->label('Wallet Address')
+                    ->disabled(fn(Asset $record) => !$record->canRecieveDeposit()),
                 Tables\Columns\ToggleColumn::make('active')
             ])
             ->filters([

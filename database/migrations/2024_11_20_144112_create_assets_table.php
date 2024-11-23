@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('uid')->unique();
             $table->string('name');
             $table->string('symbol');
+            $table->integer('precision')->default(2);
             $table->string('type');
             $table->string('description')->nullable();
             $table->boolean('active')->default(false);
