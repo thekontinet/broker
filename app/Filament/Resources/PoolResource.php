@@ -44,7 +44,6 @@ class PoolResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('asset.image')->size(20),
                 Tables\Columns\TextColumn::make('asset.name')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),

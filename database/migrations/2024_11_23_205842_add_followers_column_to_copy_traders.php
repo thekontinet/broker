@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('assets', function (Blueprint $table) {
-            $table->string('address');
+        Schema::table('copy_traders', function (Blueprint $table) {
+            $table->integer('followers');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('assets', function (Blueprint $table) {
-            $table->dropColumn('address');
+        Schema::table('copy_traders', function (Blueprint $table) {
+            $table->dropColumn('followers');
         });
     }
 };
