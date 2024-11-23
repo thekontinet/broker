@@ -56,4 +56,8 @@ class Asset extends Model
     {
         return $query->where('active', true);
     }
+
+    public function pool(){
+        return $this->hasMany(Pool::class);
+    }
 }
