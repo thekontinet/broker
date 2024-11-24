@@ -16,19 +16,29 @@
         @else
         @foreach ($traders as $trader)
         <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
-            <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700">
-                <div class="flex items-center">
-                    <img class="inline-block shrink-0 size-[48px] rounded-lg" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Avatar">
-                    <div class="ms-3">
-                        <h3 class="font-semibold text-gray-800 dark:text-white">{{$trader->name}}</h3>
-                        <p class="text-sm font-medium text-gray-400 dark:text-neutral-500 flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
-                                <path d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z" />
-                            </svg>
-                            Followers: {{$trader->followers}}/{{$trader->max_copiers}}
-                        </p>
-                    </div>
+            <div class="text-sm bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="flex items-center">
+                        <img class="inline-block shrink-0 size-[48px] rounded-lg" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Avatar">
+                        <div class="ms-3">
+                            <h3 class="font-semibold text-gray-800 dark:text-white">{{$trader->name}}</h3>
+                            <p class="text-sm font-medium text-gray-400 dark:text-neutral-500 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                                    <path d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z" />
+                                </svg>
+                                Followers: {{$trader->followers}}/{{$trader->max_copiers}}
+                            </p>
+                        </div>
+                    </span>
+                    <p class="text-gray-800 font-bold dark:text-white text-right">
+                        Asset Specialization
+                        <span class="block capitalize font-normal text-gray-400 dark:text-neutral-500">{{$trader->specialization}}</span>
+                    </p>
                 </div>
+                <p class="text-gray-800 text-right font-bold dark:text-white">
+                    Trading Style
+                    <span class="block capitalize font-normal text-gray-400 dark:text-neutral-500">{{$trader->trading_style}}</span>
+                </p>
             </div>
 
             <div class="p-4 md:p-5">
