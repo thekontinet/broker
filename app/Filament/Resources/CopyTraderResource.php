@@ -36,7 +36,9 @@ class CopyTraderResource extends Resource
                 Forms\Components\TextInput::make('ROI')->required(),
                 Forms\Components\TextInput::make('average_PnL')->required(),
                 Forms\Components\TextInput::make('max_copiers')->required(),
-                Forms\Components\TextInput::make('min_copy_amount')->required()
+                Forms\Components\TextInput::make('min_copy_amount')->required(),
+                Forms\Components\Select::make('trading_style')->required()->options(['stocks' => "Stocks", 'forex' => 'Forex', 'assets' => 'Assets']),
+                Forms\Components\Select::make('specialization')->required()->options(['conservative' => "Conservative", 'aggressive' => 'Aggressive']),
             ]);
     }
 
@@ -50,6 +52,8 @@ class CopyTraderResource extends Resource
                 Tables\Columns\TextColumn::make('average_PnL')->numeric(),
                 Tables\Columns\TextColumn::make('max_copiers')->numeric(),
                 Tables\Columns\TextColumn::make('min_copy_amount')->numeric(),
+                Tables\Columns\TextColumn::make('specialization'),
+                Tables\Columns\TextColumn::make('trading_style'),
             ])
             ->filters([
                 //

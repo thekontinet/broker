@@ -4,6 +4,7 @@ use App\Http\Controllers\CopyTraderController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StakingController;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('markets', MarketController::class)->parameters(['markets' => 'asset'])->except('index');
     Route::resource('stakes', StakingController::class);
     Route::resource('traders', CopyTraderController::class);
+    Route::resource('subscriptions', SubscriptionController::class);
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -26,4 +28,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

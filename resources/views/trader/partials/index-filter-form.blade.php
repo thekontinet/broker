@@ -9,7 +9,7 @@
                 Followers
             </button>
 
-            <button name="filter" value="PnL" class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap focus:outline-none focus:text-blue-600 dark:focus:text-blue-500 
+            <button name="filter" value="averge_PnL" class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap focus:outline-none focus:text-blue-600 dark:focus:text-blue-500 
             {{ $query === 'PnL' ? 'text-blue-600 dark:text-blue-500' : 'text-gray-500 hover:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500' }}">
                 PnL
             </button>
