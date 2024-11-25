@@ -11,7 +11,8 @@ class WalletController extends Controller
     public function index(Request $request)
     {
         return view('wallet.index', [
-            'wallets' => Auth::user()->wallets
+            'wallets' => Auth::user()->wallets,
+            'transactions' => Auth::user()->transactions()->latest()->paginate(),
         ]);
     }
 
@@ -21,7 +22,7 @@ class WalletController extends Controller
 
         return view('wallet.show', [
             'wallet' => $wallet,
-            'transactions' => $wallet->transactions()->latest()->paginate()
+            'transactions' => $wallet->walletTransactions()->latest()->paginate()
         ]);
     }
 }

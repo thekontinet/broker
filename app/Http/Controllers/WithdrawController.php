@@ -4,24 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\TransactionError;
 use App\Models\Asset;
-use App\Models\User;
 use App\Services\WalletService;
-use Bavix\Wallet\Exceptions\BalanceIsEmpty;
-use Bavix\Wallet\Internal\Exceptions\ExceptionInterface;
-use Bavix\Wallet\Models\Wallet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class DepositController extends Controller
+class WithdrawController extends Controller
 {
     public function __construct(private WalletService $walletService)
     {
 
     }
+
     public function create()
     {
-        return view('deposit.create', [
+        return view('withdraw.create', [
             'assets' => Asset::query()->whereNotNull('meta->wallet_address')->get()
         ]);
     }
@@ -36,18 +32,20 @@ class DepositController extends Controller
                     ->whereNotNull('meta->wallet_address')
             ],
             'amount' => ['required'],
+            'address' => ['required'],
         ]);
 
-        // Deposit into wallet
+        // Withdraw from wallet
         try {
-            $transaction = $this->walletService->deposit($request->input('amount'), $request->input('currency'))
-                ->description("Deposit " . strtoupper($request->input('currency')))
+            $transaction = $this->walletService->withdraw($request->input('amount'), $request->input('currency'))
+                ->description("Withdraw " . strtoupper($request->input('currency')))
                 ->confirmed(false)
+                ->with('wallet_address', $request->input('address'))
                 ->execute($request->user());
 
             return redirect(route('wallets.show', $transaction->wallet));
         } catch (TransactionError $e) {
-            return redirect()->back()->withErrors(['amount' => "Deposit failed: " . $e->getMessage()]);
+            return redirect()->back()->withErrors(['amount' => $e->getMessage()]);
         }
     }
 }

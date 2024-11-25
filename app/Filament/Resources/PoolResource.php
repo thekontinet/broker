@@ -35,6 +35,8 @@ class PoolResource extends Resource
                 Forms\Components\DatePicker::make('start_date'),
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
+                Forms\Components\Checkbox::make('active')
+                    ->columnSpanFull(),
             ]);
     }
 

@@ -504,7 +504,7 @@ return [
              *
              * @var array<string, mixed>
              */
-            'meta' => [],
+            'meta' => ['currency' => 'usdt'],
         ],
     ],
 ];

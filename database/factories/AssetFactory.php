@@ -22,11 +22,12 @@ class AssetFactory extends Factory
             'symbol' => $this->faker->currencyCode(),
             'precision' => 2,
             'type' => $this->faker->randomElement(['crypto', 'stock', 'forex']),
-            'active' => $this->faker->boolean(),
+            'active' => true,
             'meta' => [
                 'image' => $this->faker->imageUrl(),
                 'price' => $this->faker->randomFloat(2, 10, 100),
                 'currency' => $this->faker->currencyCode(),
+                'wallet_address' => $this->faker->address(),
             ]
         ];
     }

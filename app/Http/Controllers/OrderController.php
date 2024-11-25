@@ -3,21 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
+use App\Exceptions\TransactionError;
 use App\Models\Asset;
 use App\Models\Order;
 use App\Models\User;
+use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class OrderController extends Controller
 {
+    public function __construct(private WalletService $walletService)
+    {
+
+    }
     public function store(Request $request)
     {
         $request->validate([
             'asset_id' => ['required', Rule::exists('assets', 'id')->where('active', true)],
             'trade' => ['required', 'string', 'in:limit,market'],
             'price' => ['required_if:trade,limit', 'numeric', 'min:1'],
-            'amount' => ['required', 'numeric', 'min:10'],
+            'amount' => ['required', 'numeric', 'min:1', 'max:1000'],
             'type' => ['required', 'string', 'in:buy,sell'],
         ]);
 
@@ -36,22 +42,32 @@ class OrderController extends Controller
             $data['status'] = 'active';
         }
 
-        // TODO: validate users balance before executing order
-        if(!$request->user()->wallet->canWithdrawFloat($request->input('amount')))
-        {
-            return redirect()->back()->withErrors(['amount' => 'balance is to low, please fund your wallet.']);
-        }
+       try{
+           $this->walletService->withdraw($request->input('amount'))
+               ->description("Open $request->type order")
+               ->execute($request->user());
 
-        $request->user()->wallet->withdrawFloat($request->input('amount'));
-        Order::query()->create($data);
+           Order::query()->create($data);
 
-        return redirect()->back()->with('success', 'Order placed successfully');
+           return redirect()->back()->with('success', 'Order placed successfully');
+       }catch (TransactionError $exception){
+            return redirect()->back()->withErrors('amount', 'Order cannot be placed: ' . $exception->getMessage());
+       }
     }
 
     public function destroy(Order $order, Request $request)
     {
-        $order->update(['status' => OrderStatus::COMPLETED]);
-        $request->user()->wallet->depositFloat($order->quantity * $order->asset->price);
-        return redirect()->back()->with('success', 'Order has been closed');
+        try {
+            $order->update(['status' => OrderStatus::COMPLETED]);
+            $total = $order->quantity * $order->asset->price;
+
+            $this->walletService->deposit($total)
+                ->description("Open $request->type order")
+                ->execute($request->user());
+
+            return redirect()->back()->with('success', 'Order has been closed');
+        } catch (TransactionError $exception) {
+            return redirect()->back()->with('error', 'Order cannot be closed: ' . $exception->getMessage());
+        }
     }
 }

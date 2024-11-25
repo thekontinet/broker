@@ -13,4 +13,8 @@
             </div>
         @endforelse
     </section>
+
+    <section class="my-8 max-w-4xl">
+        <x-block.transaction-list :transactions="$transactions" />
+    </section>
 </x-app-layout>

@@ -47,6 +47,13 @@ class Asset extends Model
         );
     }
 
+    public function address(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->meta['wallet_address']
+        );
+    }
+
     public function getTradeSymbol()
     {
         return "BINANCE:" . strtoupper($this->symbol) . "USDT";

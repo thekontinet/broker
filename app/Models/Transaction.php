@@ -13,4 +13,9 @@ class Transaction extends \Bavix\Wallet\Models\Transaction
             get: fn () => $this->meta['description'] ?? null
         );
     }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
 }

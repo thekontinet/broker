@@ -1,5 +1,18 @@
 <?php
 
+beforeEach(function () {
+    /**
+     * User trade will be executed with their default wallet.
+     * wallet cannot run transaction if asset is inactive,
+     * this ensures the default wallet asset is active
+     */
+    \App\Models\Asset::factory()->create([
+        'name' => config('wallet.wallet.default.name'),
+        'symbol' => config('wallet.wallet.default.slug'),
+        'active' => true
+    ]);
+});
+
 test('users can trade active', function () {
     $enabledAsset = \App\Models\Asset::factory()->create(['active' => true, 'type' => 'crypto']);
     $user = \App\Models\User::factory()->create();
@@ -23,7 +36,7 @@ test('users can trade active', function () {
 
     $response->assertRedirect();
     $response->assertSessionHasNoErrors();
-    $this->assertDatabaseHas(\App\Models\Order::class, []);
+    $this->assertDatabaseHas(\App\Models\Order::class);
 });
 
 test('users balance is debited after executing trade', function () {

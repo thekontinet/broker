@@ -1,7 +1,7 @@
 <x-app-layout>
     <h1 class="text-lg font-semibold">Staking Pool</h1>
 
-    <div class="grid grid-cols-4 shadow rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+    <div class="grid grid-cols-3 shadow rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
         @foreach($stakes as $stake)
         <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 space-y-3">
             <div class="flex justify-between">
