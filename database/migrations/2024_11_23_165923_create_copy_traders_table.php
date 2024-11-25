@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pools', function (Blueprint $table) {
+        Schema::create('copy_traders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('asset_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->integer('duration');
-            $table->date('start_date');
-            $table->text('description')->nullable();
-            $table->boolean('active')->default(false);
+            $table->string('trading_day');
+            $table->integer('ROI');
+            $table->integer('average_PnL');
+            $table->integer('min_copy_amount');
+            $table->integer('max_copiers');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pools');
+        Schema::dropIfExists('copy_traders');
     }
 };

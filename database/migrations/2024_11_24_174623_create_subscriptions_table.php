@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pools', function (Blueprint $table) {
+        Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('asset_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->integer('duration');
-            $table->date('start_date');
-            $table->text('description')->nullable();
-            $table->boolean('active')->default(false);
+            $table->integer('min_amount');
+            $table->integer('ROI');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pools');
+        Schema::dropIfExists('subscriptions');
     }
 };

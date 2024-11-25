@@ -1,14 +1,9 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DepositController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StakingController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\WalletController;
-use App\Http\Controllers\WithdrawController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,6 +20,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('deposit', DepositController::class)->only(['create', 'store']);
     Route::resource('withdraw', WithdrawController::class)->only(['create', 'store']);
     Route::resource('staking', StakingController::class);
+    Route::resource('traders', CopyTraderController::class);
+    Route::resource('subscriptions', SubscriptionController::class);
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -32,4 +29,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
