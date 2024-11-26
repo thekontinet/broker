@@ -2,12 +2,8 @@
     <header class="space-y-4">
         <h1 classs="text-lg">Copy Trader</h1>
 
-        <div class="w-full flex justify-between">
-            <div class="flex items-center gap-2">
-                @include('trader.partials.asset-spec-dropdown')
-                @include('trader.partials.trading-style-dropdown')
-            </div> @include('trader.partials.index-filter-form')
-        </div>
+        @include('trader.partials.filter-forms')
+
     </header>
 
     <div class="grid grid-cols-2 gap-5">
@@ -59,31 +55,31 @@
                         </x-ui.link>
                         <x-ui.primary-button @click="open=true" class="w-full justify-center">COPY</x-ui.primary-button>
                     </div>
-                    <form x-show="open==true" action="" class="space-y-3 mt-5">
+                    <x-ui.form x-show="open==true" action="" method="POST" class="space-y-3 mt-5">
                         <x-ui.text-input type="number" name="amount" label="Amount" required />
                         <div class="text-sm space-y-2">
                             <label for="service_time" class="font-bold">Service time</label>
                             <select id="service_time" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
                                 <option selected="">Choose a service time</option>
-                                <option>One-time basis</option>
-                                <option>Copy weekly</option>
-                                <option>Copy monthly</option>
+                                <option value="once">One-time basis</option>
+                                <option value="weekly">Copy weekly</option>
+                                <option value="monthly">Copy monthly</option>
                             </select>
                         </div>
                         <div class="text-sm space-y-2">
                             <label for="risk_level" class="font-bold">Risk level</label>
                             <select id="risk_level" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
                                 <option selected="">Choose a risk level</option>
-                                <option>Low</option>
-                                <option>Medium</option>
-                                <option>High</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
                             </select>
                         </div>
                         <div class="flex items-center justify-between gap-1 mt-5">
                             <x-ui.primary-button class="justify-center w-full">Deposit</x-ui.primary-button>
                             <x-ui.secondary-button @click="open=false" class="justify-center w-full">Cancel</x-ui.secondary-button>
                         </div>
-                    </form>
+                    </x-ui.form>
                 </div>
 
             </div>

@@ -17,7 +17,12 @@ class PoolFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'asset_id' => fake()->uuid(),
+            'name' => fake()->firstName(),
+            'duration' => fake()->randomDigitNotZero(),
+            'start_date' => fake()->date(),
+            'description' => fake()->sentence(),
+            'active' => fake()->boolean(),
         ];
     }
 }

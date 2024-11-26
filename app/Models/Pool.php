@@ -37,4 +37,9 @@ class Pool extends Model
     {
         return $this->belongsTo(Asset::class)->where('active', true);
     }
+
+    public function stakes()
+    {
+        return $this->hasMany(Stake::class);
+    }
 }
