@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CopyTraderController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\MarketController;
@@ -10,11 +11,14 @@ use App\Http\Controllers\PoolController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StakingController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\TermsController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WithdrawController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'index'])->name('home');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/terms-and-conditions', [TermsController::class, 'index'])->name('terms_and_conditions');
 
 Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
