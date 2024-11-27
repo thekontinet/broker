@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PoolResource\Pages;
-use App\Filament\Resources\PoolResource\RelationManagers;
 use App\Models\Pool;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -23,21 +22,41 @@ class PoolResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\FileUpload::make('meta.image')
+                    ->avatar()
+                    ->required()
+                    ->hiddenLabel()
+                    ->columnSpanFull(),
                 Forms\Components\Select::make('asset_id')
                     ->required()
-                    ->relationship('asset', 'name',),
+                    ->relationship('asset', 'name'),
                 Forms\Components\TextInput::make('name')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('duration')
+                    ->maxLength(255)
+                    ->required(),
+                Forms\Components\TextInput::make('min_amount')
+                    ->placeholder('ex. 0.50')
                     ->numeric()
-                    ->default(null),
-                Forms\Components\TextInput::make('profit_percent')
-                    ->numeric(),
+                    ->required(),
+                Forms\Components\TextInput::make('apr')
+                    ->label('Annual Percentage Return')
+                    ->placeholder('450')
+                    ->suffix('%')
+                    ->numeric()
+                    ->required(),
+                Forms\Components\TextInput::make('meta.total_stake')
+                    ->placeholder('ex. 400.00')
+                    ->helperText('Total amount of stake in this pool.')
+                    ->numeric()
+                    ->required(),
+                Forms\Components\TextInput::make('meta.participants')
+                    ->placeholder('ex. 1000')
+                    ->helperText('Total number of people participating in this pool.')
+                    ->numeric()
+                    ->required(),
                 Forms\Components\DatePicker::make('start_date'),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
-                Forms\Components\Checkbox::make('active')
-                    ->columnSpanFull(),
+                Forms\Components\DatePicker::make('end_date'),
+                Forms\Components\Textarea::make('meta.description')
+                    ->columnSpanFull()
             ]);
     }
 
@@ -45,19 +64,28 @@ class PoolResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('asset.image')->size(20),
-                Tables\Columns\TextColumn::make('asset.name')
+                Tables\Columns\ImageColumn::make('asset.image')
+                    ->label('')
+                    ->inline()
+                    ->size(20),
+                Tables\Columns\TextColumn::make('name')
+                    ->description(fn($record) => $record->asset->name)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('duration')
+                Tables\Columns\TextColumn::make('min_amount')
                     ->numeric(),
-                Tables\Columns\TextColumn::make('profit_percent')
+                Tables\Columns\TextColumn::make('apr')
+                    ->suffix('%')
                     ->numeric(),
                 Tables\Columns\TextColumn::make('start_date')
+                    ->label('From')
                     ->date()
                     ->sortable(),
-                Tables\Columns\ToggleColumn::make('active')
+                Tables\Columns\TextColumn::make('end_date')
+                    ->label('To')
+                    ->date()
+                    ->sortable(),
             ])
             ->filters([
                 //

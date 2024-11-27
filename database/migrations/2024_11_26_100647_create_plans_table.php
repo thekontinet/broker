@@ -16,7 +16,18 @@ return new class extends Migration
             $table->string('name');
             $table->integer('duration');
             $table->integer('min_amount');
-            $table->integer('ROI');
+            $table->integer('rio');
+            $table->json('meta');
+            $table->timestamps();
+        });
+
+        Schema::create('subscriptions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id');
+            $table->foreignId('plan_id');
+            $table->integer('profit')->default(0);
+            $table->integer('strength')->default(0);
+            $table->date('end_date');
             $table->timestamps();
         });
     }
@@ -26,6 +37,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('subscriptions');
         Schema::dropIfExists('plans');
     }
 };

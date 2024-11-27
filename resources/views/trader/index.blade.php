@@ -1,9 +1,7 @@
 <x-app-layout>
+    <x-slot name="title">Traders</x-slot>
     <header class="space-y-4">
-        <h1 classs="text-lg">Copy Trader</h1>
-
         @include('trader.partials.filter-forms')
-
     </header>
 
     <div class="grid grid-cols-2 gap-5">
@@ -14,7 +12,7 @@
         <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
             <div class="text-sm bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700">
                 <div class="flex items-center justify-between mb-3">
-                    <span class="flex items-center">
+                    <div class="flex items-center">
                         <img class="inline-block shrink-0 size-[48px] rounded-lg" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Avatar">
                         <div class="ms-3">
                             <h3 class="font-semibold text-gray-800 dark:text-white">{{$trader->name}}</h3>
@@ -25,7 +23,7 @@
                                 Followers: {{$trader->followers}}/{{$trader->max_copiers}}
                             </p>
                         </div>
-                    </span>
+                    </div>
                     <p class="text-gray-800 font-bold dark:text-white text-right">
                         Asset Specialization
                         <span class="block capitalize font-normal text-gray-400 dark:text-neutral-500">{{$trader->specialization}}</span>

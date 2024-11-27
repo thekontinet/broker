@@ -6,6 +6,8 @@ use App\Exceptions\TransactionError;
 use App\Models\Asset;
 use App\Models\User;
 use App\Models\Wallet;
+use Bavix\Wallet\Exceptions\BalanceIsEmpty;
+use Bavix\Wallet\Exceptions\InsufficientFunds;
 use Bavix\Wallet\Internal\Exceptions\ExceptionInterface;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,6 +49,10 @@ class WalletService
                 'withdraw' => $wallet->withdrawFloat($this->amount, $meta, $this->confirmed),
                 default => throw new \Exception('invalid transaction type')
             };
+        }catch (InsufficientFunds){
+            throw new TransactionError("You do not have enough $this->currency in your wallet");
+        }catch (BalanceIsEmpty){
+            throw new TransactionError("Your $this->currency wallet balance is empty");
         }catch (\Exception|ExceptionInterface $exception){
             throw new TransactionError('Transaction error: ' . $exception->getMessage());
         }

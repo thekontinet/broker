@@ -16,7 +16,7 @@ class Stake extends Model
     public function profit(): Attribute
     {
         return new Attribute(
-            get: fn() => $this->amount + $this->amount * ($this->pool->profit_percent / 100),
+            get: fn() => $this->amount + $this->amount * ($this->pool->apr / 100),
         );
     }
 

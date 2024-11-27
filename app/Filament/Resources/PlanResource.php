@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PlanResource\Pages;
-use App\Filament\Resources\PlanResource\RelationManagers;
 use App\Models\Plan;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PlanResource extends Resource
 {
@@ -23,10 +20,23 @@ class PlanResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('name')->required()->options(["pro" => "Pro", "standard" => "Standard"]),
-                Forms\Components\TextInput::make('min_amount')->required()->numeric(),
-                Forms\Components\TextInput::make('ROI')->required()->numeric(),
-                Forms\Components\TextInput::make('duration')->required()->numeric(),
+                Forms\Components\TextInput::make('name')->required(),
+                Forms\Components\TextInput::make('min_amount')
+                    ->required()
+                    ->suffix('USD')
+                    ->numeric(),
+                Forms\Components\TextInput::make('rio')
+                    ->suffix('%')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('duration')
+                    ->suffix('days')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\Repeater::make('meta.benefits')
+                    ->simple(Forms\Components\TextInput::make('benefit'))
+                    ->required()
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -35,9 +45,10 @@ class PlanResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('duration'),
-                Tables\Columns\TextColumn::make('min_amount')->prefix('$ '),
-                Tables\Columns\TextColumn::make('ROI')->suffix('%'),
+                Tables\Columns\TextColumn::make('duration')->suffix('days'),
+                Tables\Columns\TextColumn::make('min_amount')->money('USD'),
+                Tables\Columns\TextColumn::make('rio')->suffix('%'),
+                Tables\Columns\TextColumn::make('meta.benefits')->listWithLineBreaks(),
             ])
             ->filters([
                 //

@@ -7,6 +7,7 @@ use App\Models\Pool;
 use App\Models\Stake;
 use App\Services\WalletService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class StakingController extends Controller
 {
@@ -15,20 +16,35 @@ class StakingController extends Controller
 
   public function store(Request $request)
   {
-    $data = $request->validate([
-      'amount' => ['required'],
-      'pool_id' => ['required', 'exists:pools,id'],
-    ]);
-
     $pool = Pool::query()->find($request->input('pool_id'));
 
+    $request->validate([
+      'amount' => ['required', 'numeric', "min:$pool->min_amount"],
+      'pool_id' => ['required', Rule::exists('pools', 'id')],
+    ], [
+        'amount.min' => "amount must be at least " . money($pool->min_amount, $pool->asset->symbol)
+    ]);
+
+
+    if(!$pool->isStakable()){
+        return back()->withErrors(['amount' => 'Pool is not yet available for staking']);
+    }
+
+    if($pool->end_date->isPast()){
+        return back()->withErrors(['amount' => 'staking for this pool has ended']);
+    }
+
+
     try {
+        /**
+         * Make sure the user debited wallet match the pool asset.
+         * for example: if the pool asset is ethereum the user ethereum wallet will be debited
+         */
       $this->walletService
-      ->withdraw($request->input('amount'))
-      ->confirmed(true)
+      ->withdraw($request->input('amount'), $pool->asset->symbol)
       ->description("$pool->name staking")
       ->execute($request->user());
-  
+
       $request->user()->stake($pool)->firstOrCreate([], [
         'amount' => 0,
         'pool_id' => $pool->id
@@ -48,8 +64,7 @@ class StakingController extends Controller
     }
 
     try {
-      $this->walletService->deposit($stake->profit)
-        ->confirmed(true)
+      $this->walletService->deposit($stake->profit, $stake->pool->asset->symbol)
         ->description("{$stake->pool->name} stake withdraw")
         ->execute($request->user());
 

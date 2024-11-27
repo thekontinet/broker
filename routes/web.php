@@ -9,6 +9,7 @@ use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PoolController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StakingController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WithdrawController;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('stakes', StakingController::class)->only(['store', 'destroy']);
     Route::resource('pools', PoolController::class)->only('index');
     Route::resource('traders', CopyTraderController::class);
-    Route::resource('plans', PlanController::class);
+    Route::resource('plans', PlanController::class)->only('index');
+    Route::resource('subscriptions', SubscriptionController::class)->only('store');
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

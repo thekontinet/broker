@@ -15,10 +15,19 @@ return new class extends Migration
             $table->id();
             $table->foreignId('asset_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->integer('duration');
+            $table->decimal('min_amount', 16, 8);
+            $table->integer('apr');
             $table->date('start_date');
-            $table->text('description')->nullable();
-            $table->boolean('active')->default(false);
+            $table->date('end_date');
+            $table->json('meta')->nullable();
+        });
+
+        Schema::create('stakes', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('pool_id')->constrained()->cascadeOnDelete();
+            $table->integer('amount');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +36,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('stakes');
         Schema::dropIfExists('pools');
     }
 };

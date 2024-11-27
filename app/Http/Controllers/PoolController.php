@@ -11,11 +11,10 @@ class PoolController extends Controller
     {
       return view("pool.index", [
         "pools" => Pool::query()
-        ->active()
-        ->whereDoesntHave("stakes", function ($query) use ($request) {
-          $query->where("user_id", $request->user()->id);
-        })
-        ->limit(50)->get(),
+            ->latest()
+            ->whereDoesntHave("stakes", function ($query) use ($request) {
+              $query->where("user_id", $request->user()->id);
+            })->paginate(),
         "stakes"=> $request->user()->stakes,
       ]);
     }

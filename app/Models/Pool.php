@@ -19,23 +19,38 @@ class Pool extends Model
 
     protected $casts = [
         'start_date' => 'date',
+        'end_date' => 'date',
+        'meta' => 'json',
     ];
 
-    public function endDate(): Attribute
+
+    public function image(): Attribute
     {
         return new Attribute(
-            get: fn () => $this->start_date->addDays($this->duration)
+            get: fn () => $this->meta['image'] ?? null
         );
     }
 
-    public function scopeActive(Builder $query)
+    public function getMeta($key, $default = null)
     {
-        return $query->where('active', true);
+        return $this->meta[$key] ?? $default;
+    }
+
+    public function isStakable()
+    {
+        return $this->start_date->isPast() && !$this->end_date->isPast();
+    }
+
+    public function hasEnded()
+    {
+        return $this->end_date->isPast();
     }
 
     public function asset()
     {
-        return $this->belongsTo(Asset::class)->where('active', true);
+        return $this->belongsTo(Asset::class)
+            ->where('active', true)
+            ->whereNotNull('meta->wallet_address');
     }
 
     public function stakes()
