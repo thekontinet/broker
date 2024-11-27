@@ -1,7 +1,7 @@
 <!-- TradingView Widget BEGIN -->
 <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
         {
             "symbols": [
             {
@@ -13,29 +13,33 @@
                 "title": "Ethereum"
             },
             {
+                "description": "Cadano",
+                "proName": "BINANCE:ADAUSDT"
+            },
+            {
+                "description": "XRP",
+                "proName": "BINANCE:XRPUSDT"
+            },
+            {
                 "description": "Solana",
-                "proName": "BINANCE:SOLUSDT"
+                "proName": "COINBASE:SOLUSD"
             },
             {
-                "description": "USDT",
-                "proName": "CRYPTOCAP:USDT.D"
-            },
-            {
-                "description": "Link",
-                "proName": "BINANCE:LINKUSDT"
-            },
-            {
-                "description": "SHIBA",
-                "proName": "BINANCE:SHIBUSDT"
+                "description": "AVAX",
+                "proName": "BINANCE:AVAXUSDT"
             },
             {
                 "description": "NEAR",
                 "proName": "BINANCE:NEARUSDT"
+            },
+            {
+                "description": "FET",
+                "proName": "BINANCE:FETUSDT"
             }
         ],
-            "isTransparent": true,
             "showSymbolLogo": true,
-            "largeChartUrl": "{{route('dashboard')}}",
+            "isTransparent": true,
+            "displayMode": "adaptive",
             "colorTheme": "dark",
             "locale": "en"
         }

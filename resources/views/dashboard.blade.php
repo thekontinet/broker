@@ -1,6 +1,10 @@
 <x-app-layout>
     <x-slot name="title">Dashboard</x-slot>
 
+    <section>
+        <x-block.tradingview-ticker/>
+    </section>
+
     <section class="grid lg:grid-cols-2 gap-4">
         @props(['wallet'])
         <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">

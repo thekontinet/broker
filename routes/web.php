@@ -4,6 +4,7 @@ use App\Http\Controllers\CopyTraderController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StakingController;
 use App\Http\Controllers\SubscriptionController;
@@ -11,9 +12,7 @@ use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WithdrawController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [PageController::class, 'index'])->name('home');
 
 Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 

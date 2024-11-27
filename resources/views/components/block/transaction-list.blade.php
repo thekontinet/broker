@@ -12,9 +12,9 @@
                 </div>
                 <div>
                     @if($transaction->type === 'deposit')
-                        <p class="text-green-500">{{ ($transaction->amountFloat) }}</p>
+                        <p class="text-green-500 text-sm">{{ ($transaction->amountFloat) }}</p>
                     @else
-                        <p class="text-red-500">{{ ($transaction->amountFloat) }}</p>
+                        <p class="text-red-500 text-sm">{{ ($transaction->amountFloat) }}</p>
                     @endif
 
                     @if($transaction->confirmed)

@@ -20,7 +20,7 @@ class MarketController extends Controller
     {
         return view('market.show', [
             'asset' => $asset,
-            'orders' => $request->user()->orders()->latest()->running()->limit(3)->get(),
+            'orders' => $request->user()->orders()->latest()->running()->limit(20)->get(),
             'symbol' => strtoupper($asset->symbol) . 'USDT',
             'wallet' => Auth::user()->wallet
         ]);
