@@ -20,7 +20,8 @@ class PlanFactory extends Factory
             "name" => fake()->userName(),
             "duration" => fake()->randomNumber(0),
             "min_amount" => fake()->randomNumber(),
-            "ROI" => fake()->randomNumber(),
+            "rio" => fake()->randomNumber(),
+            "meta" => []
         ];
     }
 }

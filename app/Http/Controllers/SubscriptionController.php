@@ -7,6 +7,7 @@ use App\Models\Plan;
 use App\Models\Subscription;
 use App\Models\User;
 use App\Services\WalletService;
+use Bavix\Wallet\Internal\Exceptions\ExceptionInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,20 +30,20 @@ class SubscriptionController extends Controller
         try {
             $this->walletService
                 ->withdraw($amount)
-                ->confirmed(true)
                 ->description('New subscription')
                 ->execute($user);
 
             /** @var Subscription $subscription */
             $subscription = $user->subscription()->firstOrCreate([
                 "plan_id" => $plan->id,
-                "end_date" => now()->addDays($plan->duration),
-            ], ['profit' => 0]);
+            ], ['profit' => 0, "end_date" => now()->addDays($plan->duration),]);
 
             $subscription->deposit($amount);
 
             return redirect()->route('dashboard')->with('success', 'subscribed successfully');
         } catch (TransactionError $e) {
+            return back()->with(["error" => $e->getMessage()]);
+        } catch (ExceptionInterface $e) {
             return back()->with(["error" => $e->getMessage()]);
         }
     }
