@@ -7,6 +7,7 @@ use App\Http\Controllers\MarketController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\PoolController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StakingController;
@@ -18,7 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
-Route::get('/terms-and-conditions', [TermsController::class, 'index'])->name('terms_and_conditions');
+Route::get('/terms', [TermsController::class, 'index'])->name('terms_and_conditions');
+Route::get('/policy', [PolicyController::class, 'index'])->name('policy');
 
 Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
