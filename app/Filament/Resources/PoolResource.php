@@ -27,11 +27,12 @@ class PoolResource extends Resource
                     ->required()
                     ->relationship('asset', 'name',),
                 Forms\Components\TextInput::make('name')
-                    ->maxLength(255)
-                    ->default(null),
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('duration')
                     ->numeric()
                     ->default(null),
+                Forms\Components\TextInput::make('profit_percent')
+                    ->numeric(),
                 Forms\Components\DatePicker::make('start_date'),
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
@@ -48,10 +49,11 @@ class PoolResource extends Resource
                 Tables\Columns\TextColumn::make('asset.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('duration')
-                    ->numeric()
-                    ->sortable(),
+                    ->numeric(),
+                Tables\Columns\TextColumn::make('profit_percent')
+                    ->numeric(),
                 Tables\Columns\TextColumn::make('start_date')
                     ->date()
                     ->sortable(),

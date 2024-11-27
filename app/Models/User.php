@@ -63,4 +63,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Order::class);
     }
+
+    public function stake(Pool $pool)
+    {
+        return $this->hasOne(Stake::class)->where('pool_id', $pool->id);
+    }
+
+    public function stakes()
+    {
+        return $this->hasMany(Stake::class);
+    }
 }

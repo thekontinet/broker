@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subscription>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserPool>
  */
-class SubscriptionFactory extends Factory
+class UserPoolFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,7 @@ class SubscriptionFactory extends Factory
     public function definition(): array
     {
         return [
-            "user_id" => fake()->uuid(),
-            "amount" => fake()->randomNumber(0),
-            "pool_id" => fake()->uuid(),
+            //
         ];
     }
 }

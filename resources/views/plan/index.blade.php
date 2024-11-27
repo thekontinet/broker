@@ -1,14 +1,14 @@
 <x-app-layout>
     <header class="flex items-center">
-        <h2 class="text-lg font-semibold py-2">Subscriptions Plans</h2>
+        <h2 class="font-semibold py-2">Plans</h2>
     </header>
 
     <div class="grid grid-cols-2 gap-5">
-        @foreach($subscriptions as $subscription)
+        @foreach($plans as $plan)
         <div class="flex flex-col text-sm bg-white text-gray-800 dark:text-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
             <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700">
-                <p class="mt-1 text-lg font-bold capitalize">
-                    {{$subscription->name}}
+                <p class="mt-1 font-bold capitalize">
+                    {{$plan->name}}
                 </p>
             </div>
             <div class="p-4 md:p-5 space-y-3">
@@ -17,7 +17,7 @@
                         Minimum investment
                     </h3>
                     <p class="text-gray-500 dark:text-neutral-400">
-                        {{$subscription->min_amount}}
+                        {{$plan->min_amount}}
                     </p>
                 </div>
                 <div>
@@ -30,7 +30,7 @@
                                 Duration
                             </h3>
                             <p class="font-bold text-gray-500 dark:text-neutral-400">
-                                {{$subscription->duration}} Days
+                                {{$plan->duration}} Days
                             </p>
                         </span>
                         <span class="flex flex-col md:px-4 md:py-2 bg-white border rounded dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
@@ -38,16 +38,17 @@
                                 ROI
                             </h3>
                             <p class="font-bold text-gray-500 dark:text-neutral-400">
-                                {{$subscription->ROI}} %
+                                {{$plan->ROI}} %
                             </p>
                         </span>
                     </div>
                 </div>
 
-                <form method="Post" action="">
-                <x-ui.text-input placeholder="Amount" type="number" name="amount" label="Amount" required />
-                <x-ui.primary-button class="w-full justify-center mt-5">Subscribe</x-ui.primary-button>
-                </form>
+                <x-ui.form method="POST" action="{{route('plans.store')}}">
+                    <x-ui.text-input type="hidden" name="plan_id" value="{{$plan->id}}" required />
+                    <x-ui.text-input placeholder="Amount" type="number" name="amount" label="Amount" required />
+                    <x-ui.primary-button class="w-full justify-center mt-5">Subscribe</x-ui.primary-button>
+                </x-ui.form>
             </div>
         </div>
         @endforeach
