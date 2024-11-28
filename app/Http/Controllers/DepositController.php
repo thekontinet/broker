@@ -47,7 +47,7 @@ class DepositController extends Controller
 
             return redirect(route('wallets.show', $transaction->wallet));
         } catch (TransactionError $e) {
-            return redirect()->back()->withErrors(['amount' => "Deposit failed: " . $e->getMessage()]);
+            return redirect()->back()->withErrors(['amount' => $e->getMessage()]);
         }
     }
 }

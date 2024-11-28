@@ -5,6 +5,7 @@ namespace App\Models;
  use Bavix\Wallet\Traits\HasWallet;
  use Bavix\Wallet\Traits\HasWallets;
  use Illuminate\Contracts\Auth\MustVerifyEmail;
+ use Illuminate\Database\Eloquent\Builder;
  use Illuminate\Database\Eloquent\Casts\Attribute;
  use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -43,6 +44,11 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function scopeAdmins(Builder $query)
+    {
+        return $query->where('email',  config('mail.from.address'));
     }
 
     public function firstname(): Attribute

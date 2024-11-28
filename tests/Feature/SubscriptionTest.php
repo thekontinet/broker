@@ -34,3 +34,38 @@ test('it can subscribe to plan', function () {
     ]);
     $this->assertEquals(100, $user->subscription->wallet->balance);
 });
+
+test('it can withdraw subscription', function () {
+    $subscription = \App\Models\Subscription::factory()->create([
+        'profit' => 10
+    ]);
+    $subscription->wallet->deposit(100);
+    $user = $subscription->user;
+    \Pest\Laravel\actingAs($user);
+
+    $this->instance(\App\Services\WalletService::class, Mockery::mock(\App\Services\WalletService::class, function ($mock) use ($subscription) {
+        $mock->shouldReceive('deposit')->once()->with(110)->andReturn($mock);
+        $mock->shouldReceive('description')->once()->andReturn($mock);
+        $mock->shouldReceive('execute')->once();
+    }));
+
+    $response = \Pest\Laravel\delete(route('subscriptions.destroy', $subscription));
+
+    $response->assertRedirect();
+    $this->assertModelMissing($subscription);
+});
+
+
+test('it cannot withdraw if subscription has not ended', function () {
+    $subscription = \App\Models\Subscription::factory()->create([
+        'profit' => 10,
+        'end_date' => now()->addDay()
+    ]);
+    $user = $subscription->user;
+    \Pest\Laravel\actingAs($user);
+
+    $response = \Pest\Laravel\delete(route('subscriptions.destroy', $subscription));
+
+    $response->assertSessionHas('error');
+    $this->assertModelExists($subscription);
+});

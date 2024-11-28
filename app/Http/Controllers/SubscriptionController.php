@@ -47,4 +47,24 @@ class SubscriptionController extends Controller
             return back()->with(["error" => $e->getMessage()]);
         }
     }
+
+    public function destroy(Subscription $subscription, Request $request)
+    {
+        if(!$subscription->end_date->isPast()) {
+            return back()->with(['error' => "You withdraw trade until after " . now()->fromNow()]);
+        }
+
+        try {
+            $this->walletService
+                ->deposit($subscription->total)
+                ->description('Trade withdrawal')
+                ->execute($request->user());
+
+            $subscription->delete();
+
+            return redirect()->route('dashboard')->with('success', 'Withdrawn successfully');
+        } catch (TransactionError $e) {
+            return back()->with(["error" => $e->getMessage()]);
+        }
+    }
 }

@@ -2,17 +2,17 @@
     <header class="flex items-center">
         <h2 class="text-lg font-semibold py-2">Market</h2>
         <div class="border-b-2 border-gray-200 dark:border-neutral-700 ms-auto">
-            <nav class="-mb-0.5 flex gap-x-6">
-                <a class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500 active" href="{{ route('markets.index', \App\Enums\AssetTypeEnum::CRYPTO->value) }}" aria-current="page">
-                    Crypto
-                </a>
-                <a class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500" href="{{ route('markets.index', \App\Enums\AssetTypeEnum::FOREX->value) }}">
-                    Forex
-                </a>
-                <a class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500" href="{{ route('markets.index', \App\Enums\AssetTypeEnum::STOCK->value) }}">
-                    Stocks
-                </a>
-            </nav>
+{{--            <nav class="-mb-0.5 flex gap-x-6">--}}
+{{--                <a class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500 active" href="{{ route('markets.index', \App\Enums\AssetTypeEnum::CRYPTO->value) }}" aria-current="page">--}}
+{{--                    Crypto--}}
+{{--                </a>--}}
+{{--                <a class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500" href="{{ route('markets.index', \App\Enums\AssetTypeEnum::FOREX->value) }}">--}}
+{{--                    Forex--}}
+{{--                </a>--}}
+{{--                <a class="py-4 px-1 inline-flex items-center gap-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:hover:text-blue-500 dark:focus:text-blue-500" href="{{ route('markets.index', \App\Enums\AssetTypeEnum::STOCK->value) }}">--}}
+{{--                    Stocks--}}
+{{--                </a>--}}
+{{--            </nav>--}}
         </div>
     </header>
 

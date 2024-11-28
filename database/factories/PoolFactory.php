@@ -19,10 +19,11 @@ class PoolFactory extends Factory
         return [
             'asset_id' => fake()->uuid(),
             'name' => fake()->firstName(),
-            'duration' => fake()->randomDigitNotZero(),
-            'start_date' => fake()->date(),
-            'description' => fake()->sentence(),
-            'active' => fake()->boolean(),
+            'min_amount' => 100,
+            'apr' => 10,
+            'start_date' => now(),
+            'end_date' => now()->addDay(),
+            'meta' => [],
         ];
     }
 }
