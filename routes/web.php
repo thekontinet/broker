@@ -35,12 +35,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('pools', PoolController::class)->only('index');
     Route::resource('traders', CopyTraderController::class);
     Route::resource('plans', PlanController::class)->only('index');
-    Route::resource('subscriptions', SubscriptionController::class)->only('store');
+    Route::resource('subscriptions', SubscriptionController::class)->only('store', 'destroy');
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__ . '/auth.php';
