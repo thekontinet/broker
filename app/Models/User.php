@@ -4,6 +4,8 @@ namespace App\Models;
 
  use Bavix\Wallet\Traits\HasWallet;
  use Bavix\Wallet\Traits\HasWallets;
+ use Filament\Models\Contracts\FilamentUser;
+ use Filament\Panel;
  use Illuminate\Contracts\Auth\MustVerifyEmail;
  use Illuminate\Database\Eloquent\Builder;
  use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -11,7 +13,7 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasWallet, HasWallets;
@@ -83,5 +85,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function subscription()
     {
         return $this->hasOne(Subscription::class);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->email == config('mail.from.address');
     }
 }
