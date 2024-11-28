@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+ use Bavix\Wallet\Traits\HasWallet;
+ use Bavix\Wallet\Traits\HasWallets;
  use Illuminate\Contracts\Auth\MustVerifyEmail;
+ use Illuminate\Database\Eloquent\Builder;
  use Illuminate\Database\Eloquent\Casts\Attribute;
  use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +14,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasWallet, HasWallets;
 
     /**
      * The attributes that are mass assignable.
@@ -43,6 +46,11 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    public function scopeAdmins(Builder $query)
+    {
+        return $query->where('email',  config('mail.from.address'));
+    }
+
     public function firstname(): Attribute
     {
         return new Attribute(
@@ -55,5 +63,25 @@ class User extends Authenticatable implements MustVerifyEmail
         return new Attribute(
             get: fn() => substr($this->name, strpos($this->name, ' '))
         );
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function stake(Pool $pool)
+    {
+        return $this->hasOne(Stake::class)->where('pool_id', $pool->id);
+    }
+
+    public function stakes()
+    {
+        return $this->hasMany(Stake::class);
+    }
+
+    public function subscription()
+    {
+        return $this->hasOne(Subscription::class);
     }
 }

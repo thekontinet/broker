@@ -25,5 +25,5 @@
                 @include('profile.partials.delete-user-form')
             </div>
         </div>
-    </div>s
+    </div>
 </x-app-layout>

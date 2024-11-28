@@ -51,11 +51,18 @@
 
     <!-- Content -->
     <div class="w-full lg:ps-64">
-        <div class="p-4 sm:p-6 space-y-4 sm:space-y-6">
+        <div class="p-4 sm:p-6 space-y-4 sm:space-y-6 dark:text-neutral-300">
+            <header class="md:hidden">
+                <header class="py-2">
+                    <h2 class="text-lg font-semibold dark:text-neutral-100">{{$title ?? null}}</h2>
+                    <p class="text-sm">{{ $description ?? null }}</p>
+                </header>
+            </header>
             {{ $slot }}
         </div>
     </div>
     <!-- End Content -->
-    <!-- ========== END MAIN CONTENT ========== -->s
+    <!-- ========== END MAIN CONTENT ========== -->
+    @stack('scripts')
     </body>
 </html>
