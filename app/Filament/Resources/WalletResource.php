@@ -40,23 +40,22 @@ class WalletResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('holder.name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('balanceFloat')
-                    ->label('Balance')
-                    ->money(fn($record) => $record->currency)
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true)
-            ])
+        return $table->modifyQueryUsing(fn($query) => $query->where('holder_type', User::class))->columns([
+            Tables\Columns\TextColumn::make('holder.name')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('name')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('slug')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('balanceFloat')
+                ->label('Balance')
+                ->money(fn($record) => $record->currency)
+                ->sortable(),
+            Tables\Columns\TextColumn::make('created_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true)
+        ])
             ->filters([
                 //
             ])
@@ -65,8 +64,7 @@ class WalletResource extends Resource
                     ->modalWidth(MaxWidth::Small)
                     ->slideOver(),
             ])
-            ->bulkActions([
-            ]);
+            ->bulkActions([]);
     }
 
     public static function getRelations(): array
