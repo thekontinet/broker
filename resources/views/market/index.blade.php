@@ -16,11 +16,11 @@
         </div>
     </header>
 
-    <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 overflow-hidden">
+    <div class="flex flex-col bg-white shadow-sm rounded dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 overflow-hidden">
         @foreach($assets as $asset)
-            <div class="flex items-center py-4 hover:bg-neutral-800 p-4 md:p-5 rounded">
+            <div class="flex items-center border border-neutral-800 mb-2 hover:bg-neutral-800 px-2 py-2 rounded-lg">
                 <div class="flex flex-1 relative">
-                    <img src="{{ $asset->image }}" alt="logo" class="w-8 h-8 me-2 rounded-full">
+                    <img src="{{ $asset->image }}" alt="logo" class="w-6 h-6 me-2 rounded-full">
                     <div class="relative">
                         <h4 class="font-medium text-sm dark:text-gray-100">{{ $asset->name }}</h4>
                         <p class="text-xs">{{ strtoupper($asset->symbol) }}</p>

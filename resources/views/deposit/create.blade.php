@@ -4,7 +4,7 @@ $addresses = $assets->pluck('address', 'symbol');
 
 <x-app-layout>
     <x-slot name="title">Deposit</x-slot>
-    <section class="max-w-xl" x-data="{addresses: @js($addresses), currency:@js(request()->query('currency')), amount:0}">
+    <section class="max-w-xl" x-data="{addresses: @js($addresses), currency:@js(request()->query('currency')), amount:0, prices: @js($assets->pluck('price', 'symbol')->toArray()), precisions: @js($assets->pluck('precision', 'symbol')->toArray()), images: @js($assets->pluck('image', 'symbol')->toArray())}">
         <x-ui.form class="space-y-8 w-full" method="post" action="{{route('deposit.store')}}">
             <x-ui.select x-model="currency" name="currency" label="Select cryptocurrency">
                 <option>Select Currency</option>
@@ -13,7 +13,17 @@ $addresses = $assets->pluck('address', 'symbol');
                 @endforeach
             </x-ui.select>
 
-            <x-ui.text-input type="text" name="amount" x-model="amount" placeholder="0.00" label="Amount"/>
+            <x-ui.text-input type="text" x-model="amount" placeholder="0.00" label="Pay">
+                <x-slot:prefix>
+                    <span class="text-sm">$</span>
+                </x-slot:prefix>
+            </x-ui.text-input>
+
+            <x-ui.text-input type="text" name="amount" label="Receive (estimate)" x-bind:value="Number(amount / prices[currency]).toFixed(precisions[currency])" readonly>
+                <x-slot:prefix>
+                    <img x-bind:src="images[currency]" alt="" class="w-6">
+                </x-slot:prefix>
+            </x-ui.text-input>
 
             <div x-show="addresses[currency] && amount != 0">
                 <span class="block text-sm mb-2 dark:text-white">Wallet Address</span>
