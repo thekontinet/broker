@@ -4,21 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\TransactionError;
 use App\Models\Asset;
-use App\Models\User;
 use App\Services\WalletService;
-use Bavix\Wallet\Exceptions\BalanceIsEmpty;
-use Bavix\Wallet\Internal\Exceptions\ExceptionInterface;
-use Bavix\Wallet\Models\Wallet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class DepositController extends Controller
 {
-    public function __construct(private WalletService $walletService)
-    {
-
-    }
+    public function __construct(
+        private readonly WalletService $walletService,
+    ){}
     public function create()
     {
         return view('deposit.create', [

@@ -17,19 +17,19 @@ class MarketDataService
         //
     }
 
-    public function getPrice(string $id): float
+    public function getPrice(string $id, string $fiatCurrency = 'USD'): float
     {
-        $prices = $this->getMarketInfo();
+        $prices = $this->getMarketInfo($fiatCurrency);
         return $prices[$id]['current_price'];
     }
 
-    public function getMarketInfo()
+    public function getMarketInfo(string $fiatCurrency = 'USD')
     {
         $coinIdsCollection = Asset::query()->pluck('uid');
         $ids = $coinIdsCollection->join(',');
         $key = md5($ids);
-        $data =  Cache::remember("coin-market-$key", now()->addMinute(), function () use ($ids) {
-            $response = Http::get("https://api.coingecko.com/api/v3/coins/markets?ids=$ids&vs_currency=USD");
+        $data =  Cache::remember("coin-market-$key", now()->addMinute(), function () use ($ids, $fiatCurrency) {
+            $response = Http::get("https://api.coingecko.com/api/v3/coins/markets?ids=$ids&vs_currency=$fiatCurrency");
             $response->throw();
             return $response->json();
         });

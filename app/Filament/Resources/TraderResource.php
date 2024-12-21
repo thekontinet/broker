@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SubscriptionResource\Pages;
-use App\Filament\Resources\SubscriptionResource\RelationManagers;
-use App\Models\Subscription;
+use App\Filament\Resources\TraderResource\Pages;
+use App\Filament\Resources\TraderResource\RelationManagers;
+use App\Models\Trader;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,32 +13,39 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SubscriptionResource extends Resource
+class TraderResource extends Resource
 {
-    protected static ?string $model = Subscription::class;
+    protected static ?string $model = Trader::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-check-badge';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->required(),
-                Forms\Components\Select::make('plan_id')
-                    ->relationship('plan', 'name')
-                    ->required(),
-                Forms\Components\TextInput::make('profit')
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->avatar()
+                    ->hiddenLabel(),
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255)
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('profit_share')
+                    ->required()
+                    ->numeric()
+                    ->suffix('%')
+                    ->maxValue(100)
+                    ->minValue(0)
+                    ->default(0.00),
+                Forms\Components\TextInput::make('wins')
                     ->required()
                     ->numeric()
                     ->default(0),
-                Forms\Components\TextInput::make('strength')
+                Forms\Components\TextInput::make('losses')
                     ->required()
                     ->numeric()
                     ->default(0),
-                Forms\Components\DatePicker::make('end_date')
-                    ->required(),
             ]);
     }
 
@@ -46,19 +53,20 @@ class SubscriptionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\TextColumn::make('win_rate')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('plan.name')
+                Tables\Columns\TextColumn::make('profit_share')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('wallet.balance')
-                    ->label('Paid')
-                    ->money(),
-                Tables\Columns\TextInputColumn::make('profit'),
-                Tables\Columns\TextInputColumn::make('strength'),
-                Tables\Columns\TextColumn::make('end_date')
-                    ->date()
+                Tables\Columns\TextColumn::make('wins')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('losses')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -92,9 +100,9 @@ class SubscriptionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSubscriptions::route('/'),
-            'create' => Pages\CreateSubscription::route('/create'),
-            'edit' => Pages\EditSubscription::route('/{record}/edit'),
+            'index' => Pages\ListTraders::route('/'),
+            'create' => Pages\CreateTrader::route('/create'),
+            'edit' => Pages\EditTrader::route('/{record}/edit'),
         ];
     }
 }

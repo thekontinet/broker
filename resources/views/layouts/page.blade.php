@@ -31,7 +31,9 @@
         <!-- Collapse -->
         <div id="hs-navbar-floating-dark" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block" aria-labelledby="hs-navbar-floating-dark-collapse">
             <div class="flex flex-col md:flex-row md:items-center md:justify-end py-2 md:py-0 md:ps-7">
-                <a class="p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="/" aria-current="page">Home</a>
+                <a class="p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="/">Home</a>
+                <a class="p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="{{route('page', ['page' => 'about'])}}">About</a>
+                <div class="border-t border-neutral-600 my-4 md:hidden"></div>
                 <a class="p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="{{route('markets.index', 'crypto')}}">Markets</a>
                 <a class="p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="{{ route('wallets.index') }}">Wallets</a>
                 <a class="p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="{{ route('profile.edit') }}">Profile</a>
@@ -96,7 +98,7 @@
 </footer>
 <!-- ========== END FOOTER ========== -->
 
-<div id="cookies-simple-with-icon-and-dismiss-button" class="fixed bottom-0 end-0 z-[60] sm:max-w-sm w-full mx-auto p-6">
+<div id="cookies-simple-with-icon-and-dismiss-button" class="fixed bottom-0 start-0 z-[60] sm:max-w-sm w-full mx-auto p-6">
     <!-- Card -->
     <div class="p-4 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-900 dark:border-neutral-800">
         <div class="flex gap-x-4">
@@ -150,5 +152,6 @@
     </div>
     <!-- End Card -->
 </div>
+<x-block.livechat />
 </body>
 </html>
