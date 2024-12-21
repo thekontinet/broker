@@ -1,12 +1,12 @@
 <x-page-layout>
-    <header class="max-w-[85rem] px-4 pt-10 sm:px-6 lg:px-8 mx-auto text-sm  space-y-2 mt-4">
+    <header class="max-w-4xl px-4 pt-10 sm:px-6 lg:px-8 mx-auto text-sm  space-y-2 mt-4">
         <h1 class="text-white text-lg">Terms and Conditions</h1>
-        <p class="text-xs">Last Updated: {{now()->toDateString()}} </p>
+        <p class="text-xs">Last Updated: 20th July 2024 </p>
         <p>Welcome to {{config('app.name')}}. By accessing or using our services, you agree to comply with and be bound by the following Terms and Conditions. Please read them carefully before proceeding.
         </p>
     </header>
 
-    <section class="max-w-[85rem] px-4 py-5 text-sm sm:px-6 lg:px-8 mx-auto space-y-8">
+    <section class="max-w-4xl px-4 py-5 text-sm sm:px-6 lg:px-8 mx-auto space-y-8">
         <div class="space-y-2">
             <h4 class="text-lg text-white">1. Definitions</h4>
             <p><span class="text-white">“Company”</span> refers to {{config('app.name')}}, its affiliates, subsidiaries, and partners.</p>
@@ -107,12 +107,7 @@
 
         <div class="space-y-2">
             <h4 class="text-lg text-white">15. Contact Us</h4>
-            <p>If you have any questions about these Terms and Conditions, please contact us at:
-            </p>
-            <ol>
-                <li>Email: [Insert Email Address]</li>
-                <li>Phone: [Insert Phone Number]</li>
-            </ol>
+            <p>If you have any questions about these Terms and Conditions, please contact us at: {{config('mail.from.address')}}</p>
         </div>
 
         <p>By using {{config('app.name')}}, you confirm that you have read and agreed to these Terms and Conditions.</p>
