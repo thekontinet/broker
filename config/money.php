@@ -1877,5 +1877,15 @@ return [
             'decimal_mark'        => '.',
             'thousands_separator' => ',',
         ],
+        'ADA' => [
+            'name'                => 'Cardano',
+            'code'                => 0,
+            'precision'           => 8,
+            'subunit'             => 100000000,
+            'symbol'              => 'ADA',
+            'symbol_first'        => false,
+            'decimal_mark'        => '.',
+            'thousands_separator' => ',',
+        ],
     ],
 ];

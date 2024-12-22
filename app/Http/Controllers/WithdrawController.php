@@ -15,10 +15,11 @@ class WithdrawController extends Controller
 
     }
 
-    public function create()
+    public function create(Request $request)
     {
         return view('withdraw.create', [
-            'assets' => Asset::query()->whereNotNull('meta->wallet_address')->get()
+            'assets' => Asset::query()->active()->get(),
+            'wallet' => $request->user()->getWallet($request->query('currency')),
         ]);
     }
 

@@ -51,7 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 
     public function scopeAdmins(Builder $query)
     {
-        return $query->where('email',  config('mail.from.address'));
+        return $query->where('is_admin',  true);
     }
 
     public function firstname(): Attribute

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Akaunting\Money\Currency;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if(!$this->app->runningUnitTests()){
+            Currency::mixin(resolve(\App\Currency::class));
+        }
     }
 }

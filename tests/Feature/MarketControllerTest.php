@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Http;
+
+
 test('user can only view enabled assets', function () {
     $enabledAsset = \App\Models\Asset::factory()->create(['active' => true, 'type' => 'crypto']);
     $disabledAsset = \App\Models\Asset::factory()->create(['active' => false, 'type' => 'crypto']);
