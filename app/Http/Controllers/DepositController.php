@@ -16,7 +16,7 @@ class DepositController extends Controller
     public function create()
     {
         return view('deposit.create', [
-            'assets' => Asset::query()->whereNotNull('meta->wallet_address')->get()
+            'assets' => Asset::query()->fundable()->get()
         ]);
     }
 

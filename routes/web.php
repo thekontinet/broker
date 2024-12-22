@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StakingController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\TermsController;
+use App\Http\Controllers\TokenSwapController;
 use App\Http\Controllers\TraderController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WithdrawController;
@@ -35,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('traders', TraderController::class)->only(['index', 'store', 'destroy']);
     Route::resource('plans', PlanController::class)->only('index');
     Route::resource('subscriptions', SubscriptionController::class)->only('store', 'destroy');
+    Route::resource('swap', TokenSwapController::class)->only('create', 'store');
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
