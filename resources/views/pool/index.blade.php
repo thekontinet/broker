@@ -2,6 +2,9 @@
     <x-slot name="title">Staking Pool</x-slot>
 
     <section class="">
+        <header class="mb-2">
+            <h4 class="font-bold">Available Stakes</h4>
+        </header>
         <div class="grid lg:grid-cols-3 gap-4 items-start shadow rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
             @foreach($pools as $pool)
                 <div class="relative flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 space-y-3">
@@ -101,6 +104,9 @@
         <div class="grid lg:grid-cols-3 gap-4">
             @foreach($stakes as $stake)
                 <div class="relative flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 space-y-3">
+                    @if(!$stake->pool->hasEnded())
+                        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500 absolute top-4 right-1">Live</span>
+                    @endif
                     <div class="flex flex-col justify-between">
                         <div class="flex gap-1">
                             <div class="flex -space-x-2">
