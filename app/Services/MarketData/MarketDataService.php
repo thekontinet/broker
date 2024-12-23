@@ -20,6 +20,7 @@ class MarketDataService
     public function getPrice(string $id, string $fiatCurrency = 'USD'): float
     {
         $prices = $this->getMarketInfo($fiatCurrency);
+
         return $prices[$id]['current_price'];
     }
 
@@ -28,21 +29,24 @@ class MarketDataService
         $coinIdsCollection = Asset::query()->pluck('uid');
         $ids = $coinIdsCollection->join(',');
         $key = md5($ids);
-        $data =  Cache::remember("coin-market-$key", now()->addMinute(), function () use ($ids, $fiatCurrency) {
+        $data = Cache::remember("coin-market-$key", now()->addMinute(), function () use ($ids, $fiatCurrency) {
             $response = Http::get("https://api.coingecko.com/api/v3/coins/markets?ids=$ids&vs_currency=$fiatCurrency");
             $response->throw();
+
             return $response->json();
         });
 
-        return collect($data)->reduce(function($acc, $data){
+        return collect($data)->reduce(function ($acc, $data) {
             $acc[$data['id']] = $data;
+
             return $acc;
         }, []);
     }
 
     public function getMarketList(): Collection
     {
-        $response = Http::withoutVerifying()->get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd");
+        $response = Http::withoutVerifying()->get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd');
+
         return $response->collect()->map(function ($item) {
             return [
                 'id' => $item['id'],

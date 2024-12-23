@@ -22,7 +22,7 @@ class WalletController extends Controller
 
         return view('wallet.show', [
             'wallet' => $wallet,
-            'transactions' => $wallet->walletTransactions()->latest()->paginate()
+            'transactions' => $wallet->walletTransactions()->latest()->paginate(),
         ]);
     }
 }

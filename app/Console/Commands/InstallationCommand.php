@@ -5,8 +5,6 @@ namespace App\Console\Commands;
 use App\Models\Asset;
 use App\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class InstallationCommand extends Command
@@ -31,7 +29,7 @@ class InstallationCommand extends Command
     public function handle()
     {
         $this->info('Migrating database...');
-        Artisan::call('migrate');
+        $this->callSilent('migrate');
         $this->info('Migrate successfully');
 
         $this->createAdminAccount();
@@ -61,11 +59,11 @@ class InstallationCommand extends Command
             'password' => 'required',
         ]);
 
-        if($validation->fails()){
+        if ($validation->fails()) {
             $this->error($validation->errors()->first());
+
             return $this->createAdminAccount();
         }
-
 
         return User::query()->create($credentials);
     }

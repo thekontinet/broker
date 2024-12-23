@@ -1,18 +1,14 @@
 <?php
 
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\CopyTraderController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PlanController;
-use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\PoolController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StakingController;
 use App\Http\Controllers\SubscriptionController;
-use App\Http\Controllers\TermsController;
 use App\Http\Controllers\TokenSwapController;
 use App\Http\Controllers\TraderController;
 use App\Http\Controllers\WalletController;
@@ -38,11 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('subscriptions', SubscriptionController::class)->only('store', 'destroy');
     Route::resource('swap', TokenSwapController::class)->only('create', 'store');
 
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

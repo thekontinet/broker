@@ -4,21 +4,18 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TransactionResource\Actions\Approve;
 use App\Filament\Resources\TransactionResource\Pages;
-use App\Filament\Resources\TransactionResource\RelationManagers;
 use App\Models\Transaction;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TransactionResource extends Resource
 {
     protected static ?string $model = Transaction::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-currency-dollar';
+
     protected static ?string $navigationGroup = 'Wallets';
 
     public static function form(Form $form): Form
@@ -30,11 +27,11 @@ class TransactionResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn($query) => $query->latest())
+            ->modifyQueryUsing(fn ($query) => $query->latest())
             ->columns([
                 Tables\Columns\TextColumn::make('uuid')
                     ->label('Tx ID')
-                    ->description(fn($record) => ucfirst($record->type))
+                    ->description(fn ($record) => ucfirst($record->type))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('payable.email')
                     ->label('Email')
@@ -44,7 +41,7 @@ class TransactionResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('amount_float')
                     ->label('Amount')
-                    ->formatStateUsing(fn($record, $state) => money($state, $record->wallet->currency))
+                    ->formatStateUsing(fn ($record, $state) => money($state, $record->wallet->currency))
                     ->sortable(),
                 Tables\Columns\IconColumn::make('confirmed')
                     ->boolean(),

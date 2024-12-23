@@ -6,17 +6,14 @@ use App\Enums\OrderStatus;
 use App\Exceptions\TransactionError;
 use App\Models\Asset;
 use App\Models\Order;
-use App\Models\User;
 use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class OrderController extends Controller
 {
-    public function __construct(private WalletService $walletService)
-    {
+    public function __construct(private WalletService $walletService) {}
 
-    }
     public function store(Request $request)
     {
         $request->validate([
@@ -38,21 +35,21 @@ class OrderController extends Controller
             'quantity' => $request->input('amount') / $price,
         ];
 
-        if($request->input('trade') === 'market'){
+        if ($request->input('trade') === 'market') {
             $data['status'] = 'active';
         }
 
-       try{
-           $this->walletService->withdraw($request->input('amount'))
-               ->description("Open $request->type order")
-               ->execute($request->user());
+        try {
+            $this->walletService->withdraw($request->input('amount'))
+                ->description("Open $request->type order")
+                ->execute($request->user());
 
-           Order::query()->create($data);
+            Order::query()->create($data);
 
-           return redirect()->back()->with('success', 'Order placed successfully');
-       }catch (TransactionError $exception){
-            return redirect()->back()->withErrors('amount', 'Order cannot be placed: ' . $exception->getMessage());
-       }
+            return redirect()->back()->with('success', 'Order placed successfully');
+        } catch (TransactionError $exception) {
+            return redirect()->back()->withErrors('amount', 'Order cannot be placed: '.$exception->getMessage());
+        }
     }
 
     public function destroy(Order $order, Request $request)
@@ -67,7 +64,7 @@ class OrderController extends Controller
 
             return redirect()->back()->with('success', 'Order has been closed');
         } catch (TransactionError $exception) {
-            return redirect()->back()->with('error', 'Order cannot be closed: ' . $exception->getMessage());
+            return redirect()->back()->with('error', 'Order cannot be closed: '.$exception->getMessage());
         }
     }
 }

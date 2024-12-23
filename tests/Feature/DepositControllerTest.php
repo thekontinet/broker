@@ -10,7 +10,7 @@ test('user can deposit into their wallet', function () {
     /** @var \Illuminate\Testing\TestResponse $response */
     $response = $this->actingAs($user)->post(route('deposit.store'), [
         'currency' => \App\Models\Asset::factory()->create(['active' => true])->symbol,
-        'amount' => 100
+        'amount' => 100,
     ]);
 
     // assert
@@ -28,7 +28,7 @@ test('user deposit has description', function () {
     /** @var \Illuminate\Testing\TestResponse $response */
     $response = $this->actingAs($user)->post(route('deposit.store'), [
         'currency' => \App\Models\Asset::factory()->create(['active' => true])->symbol,
-        'amount' => 100
+        'amount' => 100,
     ]);
 
     // assert
@@ -44,7 +44,7 @@ test('user cannot deposit into wallet with inactive currency state', function ()
     /** @var \Illuminate\Testing\TestResponse $response */
     $response = $this->actingAs($user)->post(route('deposit.store'), [
         'currency' => \App\Models\Asset::factory()->create(['active' => false])->symbol,
-        'amount' => 100
+        'amount' => 100,
     ]);
 
     // assert
@@ -59,7 +59,7 @@ test('user cannot deposit into wallet with no address', function () {
     /** @var \Illuminate\Testing\TestResponse $response */
     $response = $this->actingAs($user)->post(route('deposit.store'), [
         'currency' => \App\Models\Asset::factory()->create(['active' => true, 'meta' => ['wallet_address' => null]])->symbol,
-        'amount' => 100
+        'amount' => 100,
     ]);
 
     // assert

@@ -27,11 +27,13 @@ class Subscription extends Model implements \Bavix\Wallet\Interfaces\Wallet
         );
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function plan(){
+    public function plan()
+    {
         return $this->belongsTo(Plan::class);
     }
 }

@@ -4,7 +4,6 @@ namespace App\Mail;
 
 use App\Models\Wallet;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -17,10 +16,7 @@ class TransactionConfirmed extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(private Wallet $wallet)
-    {
-
-    }
+    public function __construct(private Wallet $wallet) {}
 
     /**
      * Get the message envelope.

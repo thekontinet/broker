@@ -9,11 +9,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TokenSwapController extends Controller
 {
-    public function __construct(private WalletService $walletService){}
+    public function __construct(private WalletService $walletService) {}
 
     public function create(Request $request)
     {
-        if(!$symbol = $request->query('symbol')) throw new NotFoundHttpException();
+        if (! $symbol = $request->query('symbol')) {
+            throw new NotFoundHttpException;
+        }
+
         return view('wallet.swap', [
             'assets' => Asset::active()->whereNot('symbol', $symbol)->paginate(),
             'asset' => Asset::query()->where('symbol', $symbol)->firstOrFail(),
@@ -58,5 +61,4 @@ class TokenSwapController extends Controller
         // Step 8: Return a success response
         return redirect()->route('wallets.index');
     }
-
 }

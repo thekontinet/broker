@@ -16,14 +16,14 @@ class Trader extends Model
     public function image(): Attribute
     {
         return new Attribute(
-            get: fn($value) => '/storage/' . $value
+            get: fn ($value) => '/storage/'.$value
         );
     }
 
     public function winRate(): Attribute
     {
         return new Attribute(
-            get: fn() => intval($this->wins / ($this->losses + $this->wins) * 100)
+            get: fn () => intval($this->wins / ($this->losses + $this->wins) * 100)
         );
     }
 

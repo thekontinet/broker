@@ -9,14 +9,13 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PoolResource extends Resource
 {
     protected static ?string $model = Pool::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
     protected static ?string $navigationGroup = 'Investments';
 
     public static function form(Form $form): Form
@@ -57,7 +56,7 @@ class PoolResource extends Resource
                 Forms\Components\DatePicker::make('start_date'),
                 Forms\Components\DatePicker::make('end_date'),
                 Forms\Components\Textarea::make('meta.description')
-                    ->columnSpanFull()
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -70,7 +69,7 @@ class PoolResource extends Resource
                     ->inline()
                     ->size(20),
                 Tables\Columns\TextColumn::make('name')
-                    ->description(fn($record) => $record->asset->name)
+                    ->description(fn ($record) => $record->asset->name)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()->sortable(),

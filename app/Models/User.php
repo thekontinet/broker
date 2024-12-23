@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
- use Bavix\Wallet\Traits\HasWallet;
- use Bavix\Wallet\Traits\HasWallets;
- use Filament\Models\Contracts\FilamentUser;
- use Filament\Panel;
- use Illuminate\Contracts\Auth\MustVerifyEmail;
- use Illuminate\Database\Eloquent\Builder;
- use Illuminate\Database\Eloquent\Casts\Attribute;
- use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Bavix\Wallet\Traits\HasWallet;
+use Bavix\Wallet\Traits\HasWallets;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements MustVerifyEmail, FilamentUser
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasWallet, HasWallets;
+    use HasFactory, HasWallet, HasWallets, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -51,20 +51,20 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 
     public function scopeAdmins(Builder $query)
     {
-        return $query->where('is_admin',  true);
+        return $query->where('is_admin', true);
     }
 
     public function firstname(): Attribute
     {
         return new Attribute(
-            get: fn() => substr($this->name, 0, strpos($this->name, ' '))
+            get: fn () => substr($this->name, 0, strpos($this->name, ' '))
         );
     }
 
     public function lastname(): Attribute
     {
         return new Attribute(
-            get: fn() => substr($this->name, strpos($this->name, ' '))
+            get: fn () => substr($this->name, strpos($this->name, ' '))
         );
     }
 

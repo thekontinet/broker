@@ -28,7 +28,7 @@ class AssetFactory extends Factory
                 'price' => $this->faker->randomFloat(2, 10, 100),
                 'currency' => $this->faker->currencyCode(),
                 'wallet_address' => $this->faker->address(),
-            ]
+            ],
         ];
     }
 }
