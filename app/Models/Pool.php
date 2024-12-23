@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +12,7 @@ class Pool extends Model
     use HasFactory;
 
     const CREATED_AT = 'start_date';
+
     const UPDATED_AT = null;
 
     protected $guarded = [];
@@ -22,7 +22,6 @@ class Pool extends Model
         'end_date' => 'date',
         'meta' => 'json',
     ];
-
 
     public function image(): Attribute
     {
@@ -38,7 +37,7 @@ class Pool extends Model
 
     public function isStakable()
     {
-        return $this->start_date->isPast() && !$this->end_date->isPast();
+        return $this->start_date->isPast() && ! $this->end_date->isPast();
     }
 
     public function hasEnded()

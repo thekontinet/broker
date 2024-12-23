@@ -10,10 +10,7 @@ use Illuminate\Validation\Rule;
 
 class WithdrawController extends Controller
 {
-    public function __construct(private WalletService $walletService)
-    {
-
-    }
+    public function __construct(private WalletService $walletService) {}
 
     public function create(Request $request)
     {
@@ -30,7 +27,7 @@ class WithdrawController extends Controller
                 'required',
                 Rule::exists('assets', 'symbol')
                     ->where('active', true)
-                    ->whereNotNull('meta->wallet_address')
+                    ->whereNotNull('meta->wallet_address'),
             ],
             'amount' => ['required'],
             'address' => ['required'],
@@ -39,7 +36,7 @@ class WithdrawController extends Controller
         // Withdraw from wallet
         try {
             $transaction = $this->walletService->withdraw($request->input('amount'), $request->input('currency'))
-                ->description("Withdraw " . strtoupper($request->input('currency')))
+                ->description('Withdraw '.strtoupper($request->input('currency')))
                 ->confirmed(false)
                 ->with('wallet_address', $request->input('address'))
                 ->execute($request->user());

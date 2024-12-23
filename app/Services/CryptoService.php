@@ -22,13 +22,13 @@ class CryptoService
 
         foreach ($coins as $coin) {
             Currency::updateOrCreate(
-                ['symbol' => $coin["symbol"],],
+                ['symbol' => $coin['symbol']],
                 [
-                    "name" => strtolower($coin["name"]),
-                    "type" => "crypto",
-                    "price" => $coin["current_price"],
-                    "meta" => $coin,
-                    "status" => false,
+                    'name' => strtolower($coin['name']),
+                    'type' => 'crypto',
+                    'price' => $coin['current_price'],
+                    'meta' => $coin,
+                    'status' => false,
                 ]
             );
         }

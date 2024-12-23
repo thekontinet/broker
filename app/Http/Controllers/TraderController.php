@@ -10,11 +10,11 @@ class TraderController extends Controller
 {
     public function index()
     {
-//        /** @var Collection $t */
-//        $t = Trader::first()->users;
-//        $t->contains(re);
+        //        /** @var Collection $t */
+        //        $t = Trader::first()->users;
+        //        $t->contains(re);
         return view('trader.index', [
-            'traders' => Trader::all()
+            'traders' => Trader::all(),
         ]);
     }
 
@@ -32,6 +32,7 @@ class TraderController extends Controller
     public function destroy(Request $request, Trader $trader)
     {
         $trader->users()->detach($request->user());
+
         return redirect()->back()->with(['success' => 'Copy trading stopped']);
     }
 }

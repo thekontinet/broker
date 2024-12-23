@@ -4,7 +4,6 @@ namespace App\Filament\Resources\WalletResource\Pages;
 
 use App\Filament\Resources\WalletResource;
 use App\Models\Asset;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateWallet extends CreateRecord

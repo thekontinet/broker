@@ -11,8 +11,9 @@ class MarketController extends Controller
 {
     public function index(AssetTypeEnum $type, Request $request)
     {
-        if($symbol = $this->resolveTradingviewSymbol($request->query('tvwidgetsymbol'))){
+        if ($symbol = $this->resolveTradingviewSymbol($request->query('tvwidgetsymbol'))) {
             $asset = Asset::active()->where('type', $type)->where('symbol', $symbol)->firstOrFail();
+
             return redirect()->route('markets.show', $asset);
         }
 
@@ -26,8 +27,8 @@ class MarketController extends Controller
         return view('market.show', [
             'asset' => $asset,
             'orders' => $request->user()->orders()->latest()->running()->limit(20)->get(),
-            'symbol' => strtoupper($asset->symbol) . 'USDT',
-            'wallet' => Auth::user()->wallet
+            'symbol' => strtoupper($asset->symbol).'USDT',
+            'wallet' => Auth::user()->wallet,
         ]);
     }
 
@@ -36,7 +37,7 @@ class MarketController extends Controller
         preg_match('/BINANCE:(.*?)USDT/i', $symbol, $matches);
 
         // Check if a match was found
-        if (!empty($matches[1])) {
+        if (! empty($matches[1])) {
             return $matches[1];
         }
 

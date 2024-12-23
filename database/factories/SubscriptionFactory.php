@@ -19,9 +19,9 @@ class SubscriptionFactory extends Factory
     public function definition(): array
     {
         return [
-            "user_id" => User::factory(),
-            "plan_id" => Plan::factory(),
-            "end_date" => now()->subDay(),
+            'user_id' => User::factory(),
+            'plan_id' => Plan::factory(),
+            'end_date' => now()->subDay(),
         ];
     }
 }

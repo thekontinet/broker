@@ -19,8 +19,8 @@ class SubscriptionController extends Controller
     {
         $plan = Plan::query()->findOrFail($request->get('plan_id'));
         $request->validate([
-            "amount" => ["required", 'numeric', "min:$plan->min_amount"],
-            "plan_id" => ["required", "exists:plans,id"],
+            'amount' => ['required', 'numeric', "min:$plan->min_amount"],
+            'plan_id' => ['required', 'exists:plans,id'],
         ]);
 
         $amount = $request->get('amount');
@@ -35,23 +35,23 @@ class SubscriptionController extends Controller
 
             /** @var Subscription $subscription */
             $subscription = $user->subscription()->firstOrCreate([
-                "plan_id" => $plan->id,
-            ], ['profit' => 0, "end_date" => now()->addDays($plan->duration),]);
+                'plan_id' => $plan->id,
+            ], ['profit' => 0, 'end_date' => now()->addDays($plan->duration)]);
 
             $subscription->deposit($amount);
 
             return redirect()->route('dashboard')->with('success', 'subscribed successfully');
         } catch (TransactionError $e) {
-            return back()->with(["error" => $e->getMessage()]);
+            return back()->with(['error' => $e->getMessage()]);
         } catch (ExceptionInterface $e) {
-            return back()->with(["error" => $e->getMessage()]);
+            return back()->with(['error' => $e->getMessage()]);
         }
     }
 
     public function destroy(Subscription $subscription, Request $request)
     {
-        if(!$subscription->end_date->isPast()) {
-            return back()->with(['error' => "You withdraw trade until after " . now()->fromNow()]);
+        if (! $subscription->end_date->isPast()) {
+            return back()->with(['error' => 'You withdraw trade until after '.now()->fromNow()]);
         }
 
         try {
@@ -64,7 +64,7 @@ class SubscriptionController extends Controller
 
             return redirect()->route('dashboard')->with('success', 'Withdrawn successfully');
         } catch (TransactionError $e) {
-            return back()->with(["error" => $e->getMessage()]);
+            return back()->with(['error' => $e->getMessage()]);
         }
     }
 }

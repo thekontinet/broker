@@ -6,8 +6,6 @@ use App\Mail\NewTransactionRequest;
 use App\Models\Transaction;
 use App\Models\User;
 use Bavix\Wallet\Internal\Events\TransactionCreatedEvent;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
 class EmailAdminOnNewTranactionRequest
@@ -27,7 +25,7 @@ class EmailAdminOnNewTranactionRequest
     {
         $transaction = Transaction::query()->find($event->getId());
 
-        if(!$transaction->confirmed){
+        if (! $transaction->confirmed) {
             Mail::to(User::query()->admins()->get())->send(new NewTransactionRequest($transaction));
         }
     }
