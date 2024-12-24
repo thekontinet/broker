@@ -9,13 +9,15 @@ trait HasMarketData
 {
     public function price(): Attribute
     {
-        try{
+        try {
             $marketDataService = resolve(MarketDataService::class);
+
             return new Attribute(
                 get: fn () => $marketDataService->getPrice($this->uid)
             );
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             logger($exception);
+
             return new Attribute(
                 get: fn () => null
             );
@@ -25,6 +27,7 @@ trait HasMarketData
     public function priceChangePercentage24h(): Attribute
     {
         $marketDataService = resolve(MarketDataService::class);
+
         return new Attribute(
             get: fn () => $marketDataService->getMarketInfo()[$this->uid]['price_change_percentage_24h'] ?? null
         );

@@ -4,12 +4,10 @@ namespace App\Models;
 
 use App\Enums\AssetTypeEnum;
 use App\Models\Concerns\HasMarketData;
-use App\Services\MarketData\MarketDataService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
 
 class Asset extends Model
 {
@@ -37,6 +35,7 @@ class Asset extends Model
     public function canRecieveDeposit()
     {
         $symbol = strtoupper($this->symbol);
+
         return config("money.currencies.$symbol") ? true : false;
     }
 
@@ -50,13 +49,13 @@ class Asset extends Model
     public function address(): Attribute
     {
         return new Attribute(
-            get: fn () => $this->meta['wallet_address']
+            get: fn () => $this->meta['wallet_address'] ?? null
         );
     }
 
     public function getTradeSymbol()
     {
-        return "BINANCE:" . strtoupper($this->symbol) . "USDT";
+        return 'BINANCE:'.strtoupper($this->symbol).'USDT';
     }
 
     public function scopeActive(Builder $query)
@@ -64,7 +63,13 @@ class Asset extends Model
         return $query->where('active', true);
     }
 
-    public function pool(){
+    public function scopeFundable(Builder $query)
+    {
+        return $query->whereNotNull('meta->wallet_address');
+    }
+
+    public function pool()
+    {
         return $this->hasMany(Pool::class);
     }
 }

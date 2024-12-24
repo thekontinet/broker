@@ -11,9 +11,11 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
+        $user = $request->user();
+
         return view('dashboard', [
-            'wallets' => $request->user()->wallets,
-            'user' => $request->user()
+            'wallets' => $user->wallets,
+            'user' => $user,
         ]);
     }
 }

@@ -42,14 +42,14 @@ class Order extends Model
     public function profitAndLossPrice(): Attribute
     {
         return new Attribute(
-            get: fn() => number_format(($this->asset->price - $this->price) * $this->quantity, 2)
+            get: fn () => number_format(($this->asset->price - $this->price) * $this->quantity, 2)
         );
     }
 
     public function profitAndLossPercentage(): Attribute
     {
         return new Attribute(
-            get: fn() => number_format((($this->asset->price - $this->price) / $this->price) * 100, 2)
+            get: fn () => number_format((($this->asset->price - $this->price) / $this->price) * 100, 2)
         );
     }
 

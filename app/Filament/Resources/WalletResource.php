@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\WalletResource\Actions\FundWallet;
 use App\Filament\Resources\WalletResource\Pages;
-use App\Filament\Resources\WalletResource\RelationManagers;
 use App\Models\User;
 use App\Models\Wallet;
 use Filament\Forms;
@@ -14,13 +13,14 @@ use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class WalletResource extends Resource
 {
     protected static ?string $model = Wallet::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-wallet';
+
+    protected static ?string $navigationGroup = 'Wallets';
 
     public static function form(Form $form): Form
     {
@@ -33,14 +33,14 @@ class WalletResource extends Resource
                     ])
                     ->required(),
                 Forms\Components\Select::make('slug')
-                    ->relationship('asset', 'name', fn(Builder $query) => $query->active()->whereIn('symbol', array_keys(config('money.currencies'))))
-                    ->required()
+                    ->relationship('asset', 'name', fn (Builder $query) => $query->active()->whereIn('symbol', array_keys(config('money.currencies'))))
+                    ->required(),
             ]);
     }
 
     public static function table(Table $table): Table
     {
-        return $table->modifyQueryUsing(fn($query) => $query->where('holder_type', User::class))->columns([
+        return $table->modifyQueryUsing(fn ($query) => $query->where('holder_type', User::class))->columns([
             Tables\Columns\TextColumn::make('holder.name')
                 ->searchable(),
             Tables\Columns\TextColumn::make('name')
@@ -49,12 +49,12 @@ class WalletResource extends Resource
                 ->searchable(),
             Tables\Columns\TextColumn::make('balanceFloat')
                 ->label('Balance')
-                ->money(fn($record) => $record->currency)
+                ->money(fn ($record) => $record->currency)
                 ->sortable(),
             Tables\Columns\TextColumn::make('created_at')
                 ->dateTime()
                 ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true)
+                ->toggleable(isToggledHiddenByDefault: true),
         ])
             ->filters([
                 //

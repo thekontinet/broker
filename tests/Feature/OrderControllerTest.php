@@ -9,7 +9,7 @@ beforeEach(function () {
     \App\Models\Asset::factory()->create([
         'name' => config('wallet.wallet.default.name'),
         'symbol' => config('wallet.wallet.default.slug'),
-        'active' => true
+        'active' => true,
     ]);
 });
 
@@ -20,7 +20,7 @@ test('users can trade active', function () {
 
     $this->mock(
         \App\Services\MarketData\MarketDataService::class,
-        function (\Mockery\MockInterface $mock) use($enabledAsset) {
+        function (\Mockery\MockInterface $mock) use ($enabledAsset) {
             $mock->shouldReceive('getPrice')->andReturn(100);
             $mock->shouldReceive('getMarketInfo')->andReturn([$enabledAsset->uid => 'price_change_percentage_24h']);
         }
@@ -46,7 +46,7 @@ test('users balance is debited after executing trade', function () {
 
     $this->mock(
         \App\Services\MarketData\MarketDataService::class,
-        function (\Mockery\MockInterface $mock) use($enabledAsset) {
+        function (\Mockery\MockInterface $mock) use ($enabledAsset) {
             $mock->shouldReceive('getPrice')->andReturn(100);
             $mock->shouldReceive('getMarketInfo')->andReturn([$enabledAsset->uid => 'price_change_percentage_24h']);
         }
@@ -68,7 +68,7 @@ test('users cannot trade inactive assets', function () {
 
     $this->mock(
         \App\Services\MarketData\MarketDataService::class,
-        function (\Mockery\MockInterface $mock) use($disabledAsset) {
+        function (\Mockery\MockInterface $mock) use ($disabledAsset) {
             $mock->shouldReceive('getPrice')->andReturn(100);
             $mock->shouldReceive('getMarketInfo')->andReturn([$disabledAsset->uid => 'price_change_percentage_24h']);
         }

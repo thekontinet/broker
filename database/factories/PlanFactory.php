@@ -17,11 +17,11 @@ class PlanFactory extends Factory
     public function definition(): array
     {
         return [
-            "name" => fake()->userName(),
-            "duration" => fake()->randomNumber(0),
-            "min_amount" => fake()->randomNumber(),
-            "rio" => fake()->randomNumber(),
-            "meta" => []
+            'name' => fake()->userName(),
+            'duration' => fake()->randomNumber(0),
+            'min_amount' => fake()->randomNumber(),
+            'rio' => fake()->randomNumber(),
+            'meta' => [],
         ];
     }
 }

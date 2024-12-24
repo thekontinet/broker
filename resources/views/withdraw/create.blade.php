@@ -1,10 +1,6 @@
-@php
-$addresses = $assets->pluck('address', 'symbol');
-@endphp
-
 <x-app-layout>
     <x-slot name="title">Withdraw</x-slot>
-    <section class="max-w-xl" x-data="{addresses: @js($addresses), currency:@js(request()->query('currency')), amount:0}">
+    <section class="max-w-xl" x-data="{currency:@js(request()->query('currency')), amount:0}">
         <x-ui.form class="space-y-8 w-full" method="post" action="{{route('withdraw.store')}}">
             <x-ui.select x-model="currency" name="currency" label="Select cryptocurrency">
                 <option>Select Currency</option>
@@ -13,9 +9,18 @@ $addresses = $assets->pluck('address', 'symbol');
                 @endforeach
             </x-ui.select>
 
-            <x-ui.text-input type="text" name="amount" x-model="amount" placeholder="0.00" label="Amount"/>
+            <div>
+                <x-ui.text-input type="text" name="amount" x-model="amount" placeholder="0.00" label="Amount">
+                    <x-slot:suffix>
+                        <button type="button" class="text-xs font-medium text-amber-500 relative z-50 pointer-events-auto" @click="amount = {{$wallet ? $wallet->balance_float : 0.00}}">Max</button>
+                    </x-slot:suffix>
+                </x-ui.text-input>
+                <div class="text-xs font-bold text-right">
+                    Balance: {{$wallet ? money($wallet->balance_float, $wallet->currency) : money(0, $wallet->currency)}}
+                </div>
+            </div>
 
-            <div x-show="addresses[currency] && amount != 0">
+            <div x-show="amount != 0">
                 <x-ui.text-input label="Wallet Address" placeholder="Enter your wallet address" name="address" />
             </div>
 

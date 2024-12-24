@@ -3,21 +3,20 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AssetResource\Pages;
-use App\Filament\Resources\AssetResource\RelationManagers;
 use App\Models\Asset;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AssetResource extends Resource
 {
     protected static ?string $model = Asset::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
+
+    protected static ?string $navigationGroup = 'Investments';
 
     public static function form(Form $form): Form
     {
@@ -51,16 +50,16 @@ class AssetResource extends Resource
                     ->label('')
                     ->size(20),
                 Tables\Columns\TextColumn::make('name')
-                    ->formatStateUsing(fn($record) => $record->name . " (" . strtoupper($record->symbol) .")")
-                    ->description(fn($record) => $record->description)
+                    ->formatStateUsing(fn ($record) => $record->name.' ('.strtoupper($record->symbol).')')
+                    ->description(fn ($record) => $record->description)
                     ->searchable(),
                 Tables\Columns\TextInputColumn::make('meta.wallet_address')
                     ->label('Wallet Address')
-                    ->disabled(fn(Asset $record) => !$record->canRecieveDeposit()),
-                Tables\Columns\ToggleColumn::make('active')
+                    ->disabled(fn (Asset $record) => ! $record->canRecieveDeposit()),
+                Tables\Columns\ToggleColumn::make('active'),
             ])
             ->filters([
-                Tables\Filters\Filter::make('type')
+                Tables\Filters\Filter::make('type'),
             ])
             ->actions([
             ])

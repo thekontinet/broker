@@ -13,6 +13,6 @@ class Plan extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'meta' => 'json'
+        'meta' => 'json',
     ];
 }

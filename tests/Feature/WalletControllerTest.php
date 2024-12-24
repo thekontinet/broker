@@ -11,7 +11,7 @@ beforeEach(function () {
     \App\Models\Asset::factory()->create([
         'name' => config('wallet.wallet.default.name'),
         'symbol' => config('wallet.wallet.default.slug'),
-        'active' => true
+        'active' => true,
     ]);
 });
 
@@ -21,7 +21,7 @@ test('user can view all their wallet', function () {
     $wallet = \App\Models\Wallet::factory()->for($user, 'holder')->create();
     $this->mock(
         \App\Services\MarketData\MarketDataService::class,
-        function (\Mockery\MockInterface $mock) use($wallet) {
+        function (\Mockery\MockInterface $mock) use ($wallet) {
             $mock->shouldReceive('getPrice')->andReturn(100);
             $mock->shouldReceive('getMarketInfo')->andReturn([$wallet->asset->uid => 'price_change_percentage_24h']);
         }
@@ -43,7 +43,7 @@ test('user can view wallet transactions', function () {
     $transaction = resolve(\App\Services\WalletService::class)->deposit(100)->execute($user);
     $this->mock(
         \App\Services\MarketData\MarketDataService::class,
-        function (\Mockery\MockInterface $mock) use($wallet) {
+        function (\Mockery\MockInterface $mock) use ($wallet) {
             $mock->shouldReceive('getPrice')->andReturn(100);
             $mock->shouldReceive('getMarketInfo')->andReturn([$wallet->asset->uid => 'price_change_percentage_24h']);
         }
@@ -68,7 +68,7 @@ test('user can view other wallet transactions', function () {
     $transaction = resolve(\App\Services\WalletService::class)->deposit(100)->execute($anotherUser);
     $this->mock(
         \App\Services\MarketData\MarketDataService::class,
-        function (\Mockery\MockInterface $mock) use($anotherUserWallet) {
+        function (\Mockery\MockInterface $mock) use ($anotherUserWallet) {
             $mock->shouldReceive('getPrice')->andReturn(100);
             $mock->shouldReceive('getMarketInfo')->andReturn([$anotherUserWallet->asset->uid => 'price_change_percentage_24h']);
         }

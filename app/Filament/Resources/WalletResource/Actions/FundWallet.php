@@ -29,10 +29,10 @@ class FundWallet extends Action
             Select::make('type')->options(['credit' => 'credit', 'debit' => 'debit'])->required(),
             Checkbox::make('status')->label('Confirm immediately')
                 ->helperText('If you select this, the fund will reflect on the user balance immediately, otherwise it will be a pending transaction'),
-        ])->action(function(array $data, Wallet $record) {
-            if($data['type'] === 'credit'){
+        ])->action(function (array $data, Wallet $record) {
+            if ($data['type'] === 'credit') {
                 $record->depositFloat(abs($data['amount']), confirmed: $data['status']);
-            }else{
+            } else {
                 $record->withdrawFloat(abs($data['amount']), confirmed: $data['status']);
             }
         });

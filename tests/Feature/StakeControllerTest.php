@@ -13,7 +13,7 @@ beforeEach(function () {
     \App\Models\Asset::factory()->create([
         'name' => config('wallet.wallet.default.name'),
         'symbol' => config('wallet.wallet.default.slug'),
-        'active' => true
+        'active' => true,
     ]);
 });
 
@@ -22,10 +22,10 @@ test('can access staking pool page', function () {
     $asset = Asset::factory()->create([
         'name' => config('wallet.wallet.default.name'),
         'symbol' => config('wallet.wallet.default.slug'),
-        'active' => true
+        'active' => true,
     ]);
     $pools = Pool::factory(10)->create([
-        'asset_id' => $asset->id
+        'asset_id' => $asset->id,
     ]);
 
     $response = $this->actingAs($user)->get(route('pools.index'));
@@ -39,17 +39,17 @@ test('can stake pool', function () {
     $asset = Asset::factory()->create([
         'name' => config('wallet.wallet.default.name'),
         'symbol' => config('wallet.wallet.default.slug'),
-        'active' => true
+        'active' => true,
     ]);
     $pool = Pool::factory()->create([
-        'asset_id' => $asset->id
+        'asset_id' => $asset->id,
     ]);
 
     app(\App\Services\WalletService::class)->deposit(1000)->execute($user);
 
-    $response = \Pest\Laravel\actingAs($user)->post(route('stakes.store',[
+    $response = \Pest\Laravel\actingAs($user)->post(route('stakes.store', [
         'pool_id' => $pool->id,
-        'amount' => 500
+        'amount' => 500,
     ]));
 
     $response->assertRedirect();
@@ -57,6 +57,4 @@ test('can stake pool', function () {
     $this->assertEquals($user->wallet->balanceFloat, 500);
 });
 
-test('can withdraw stake', function () {
-
-})->todo();
+test('can withdraw stake', function () {})->todo();

@@ -23,9 +23,9 @@ class Approve extends Action
 
         $this->label('Approve');
         $this->icon('heroicon-o-check');
-        $this->hidden(fn($record) => $record->confirmed);
+        $this->hidden(fn ($record) => $record->confirmed);
 
-        $this->action(function(Transaction $record) {
+        $this->action(function (Transaction $record) {
             $record->wallet->confirm($record);
         });
     }

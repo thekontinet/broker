@@ -16,7 +16,7 @@ test('it can subscribe to plan', function () {
     ]);
     \Pest\Laravel\actingAs($user = \App\Models\User::factory()->create());
 
-    $this->instance(\App\Services\WalletService::class, Mockery::mock(\App\Services\WalletService::class, function ($mock) use ($user) {
+    $this->instance(\App\Services\WalletService::class, Mockery::mock(\App\Services\WalletService::class, function ($mock) {
         $mock->shouldReceive('withdraw')->once()->andReturn($mock);
         $mock->shouldReceive('description')->once()->andReturn($mock);
         $mock->shouldReceive('execute')->once();
@@ -24,7 +24,7 @@ test('it can subscribe to plan', function () {
 
     $response = \Pest\Laravel\post(route('subscriptions.store'), [
         'plan_id' => $plan->id,
-        'amount' => 100
+        'amount' => 100,
     ]);
 
     $response->assertRedirect();
@@ -37,13 +37,13 @@ test('it can subscribe to plan', function () {
 
 test('it can withdraw subscription', function () {
     $subscription = \App\Models\Subscription::factory()->create([
-        'profit' => 10
+        'profit' => 10,
     ]);
     $subscription->wallet->deposit(100);
     $user = $subscription->user;
     \Pest\Laravel\actingAs($user);
 
-    $this->instance(\App\Services\WalletService::class, Mockery::mock(\App\Services\WalletService::class, function ($mock) use ($subscription) {
+    $this->instance(\App\Services\WalletService::class, Mockery::mock(\App\Services\WalletService::class, function ($mock) {
         $mock->shouldReceive('deposit')->once()->with(110)->andReturn($mock);
         $mock->shouldReceive('description')->once()->andReturn($mock);
         $mock->shouldReceive('execute')->once();
@@ -55,11 +55,10 @@ test('it can withdraw subscription', function () {
     $this->assertModelMissing($subscription);
 });
 
-
 test('it cannot withdraw if subscription has not ended', function () {
     $subscription = \App\Models\Subscription::factory()->create([
         'profit' => 10,
-        'end_date' => now()->addDay()
+        'end_date' => now()->addDay(),
     ]);
     $user = $subscription->user;
     \Pest\Laravel\actingAs($user);

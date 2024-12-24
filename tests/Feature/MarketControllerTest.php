@@ -6,7 +6,7 @@ test('user can only view enabled assets', function () {
 
     $this->mock(
         \App\Services\MarketData\MarketDataService::class,
-        function (\Mockery\MockInterface $mock) use($enabledAsset) {
+        function (\Mockery\MockInterface $mock) use ($enabledAsset) {
             $mock->shouldReceive('getPrice')->andReturn(100);
             $mock->shouldReceive('getMarketInfo')->andReturn([$enabledAsset->uid => 'price_change_percentage_24h']);
         }
@@ -28,4 +28,3 @@ test('user cannot view disabled asset market', function () {
 
     $response->assertNotFound();
 });
-
