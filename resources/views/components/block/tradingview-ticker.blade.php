@@ -35,7 +35,7 @@
         ],
             "isTransparent": true,
             "showSymbolLogo": true,
-            "largeChartUrl": "{{route('dashboard')}}",
+            "largeChartUrl": "{{route('markets.index', 'crypto')}}",
             "colorTheme": "dark",
             "locale": "en"
         }

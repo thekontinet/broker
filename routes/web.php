@@ -7,6 +7,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PoolController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RequestVerificationController;
 use App\Http\Controllers\StakingController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\TokenSwapController;
@@ -33,6 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('plans', PlanController::class)->only('index');
     Route::resource('subscriptions', SubscriptionController::class)->only('store', 'destroy');
     Route::resource('swap', TokenSwapController::class)->only('create', 'store');
+
+    Route::get('verification/request', [RequestVerificationController::class, 'create'])->name('verification.request');
+    Route::post('verification/request', [RequestVerificationController::class, 'store']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -34,11 +34,11 @@ class MarketController extends Controller
 
     private function resolveTradingviewSymbol($symbol)
     {
-        preg_match('/BINANCE:(.*?)USDT/i', $symbol, $matches);
+        preg_match('/(.*?):(.*?)USDT/i', $symbol, $matches);
 
         // Check if a match was found
-        if (! empty($matches[1])) {
-            return $matches[1];
+        if (! empty($matches[2])) {
+            return $matches[2];
         }
 
         return null;

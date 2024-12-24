@@ -83,32 +83,7 @@
                         "tabs": [
                         {
                             "title": "Crypto",
-                            "symbols": [
-                                {
-                                    "s": "BINANCE:BTCUSDT"
-                                },
-                                {
-                                    "s": "BINANCE:ETHUSDT"
-                                },
-                                {
-                                    "s": "BINANCE:SOLUSDT"
-                                },
-                                {
-                                    "s": "BINANCE:XRPUSDT"
-                                },
-                                {
-                                    "s": "BINANCE:LINKUSDT"
-                                },
-                                {
-                                    "s": "BINANCE:SUIUSDT"
-                                },
-                                {
-                                    "s": "BINANCE:PEPEUSDT"
-                                },
-                                {
-                                    "s": "BINANCE:INJUSDT"
-                                }
-                            ]
+                            "symbols": @json($assets->map(fn($asset) => ['s' => "BYBIT:". strtoupper($asset->symbol) . "USDT"]))
                         }
                         {{--{
                             "title": "Stocks",
