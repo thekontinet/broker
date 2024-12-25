@@ -17,6 +17,7 @@ class WithdrawController extends Controller
         return view('withdraw.create', [
             'assets' => Asset::query()->active()->get(),
             'wallet' => $request->user()->getWallet($request->query('currency')),
+            'wallets' => $request->user()->wallets,
         ]);
     }
 
@@ -25,9 +26,7 @@ class WithdrawController extends Controller
         $request->validate([
             'currency' => [
                 'required',
-                Rule::exists('assets', 'symbol')
-                    ->where('active', true)
-                    ->whereNotNull('meta->wallet_address'),
+                Rule::exists('assets', 'symbol'),
             ],
             'amount' => ['required'],
             'address' => ['required'],

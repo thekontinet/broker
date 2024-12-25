@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="title">Withdraw</x-slot>
-    <section class="max-w-xl" x-data="{currency:@js(request()->query('currency')), amount:0}">
+    <section class="max-w-xl" x-data="{currency:@js(request()->query('currency')), amount:0, balances:@js($wallets->pluck('formatted_balance', 'slug'))}">
         <x-ui.form class="space-y-8 w-full" method="post" action="{{route('withdraw.store')}}">
             <x-ui.select x-model="currency" name="currency" label="Select cryptocurrency">
                 <option>Select Currency</option>
@@ -15,7 +15,7 @@
                         <button type="button" class="text-xs font-medium text-amber-500 relative z-50 pointer-events-auto" @click="amount = {{$wallet ? $wallet->balance_float : 0.00}}">Max</button>
                     </x-slot:suffix>
                 </x-ui.text-input>
-                <div class="text-xs font-bold text-right">
+                <div class="text-xs font-bold text-right" x-text="balances[currency] || '0.00'">
                     Balance: {{$wallet ? money($wallet->balance_float, $wallet->currency) : money(0, $wallet->currency)}}
                 </div>
             </div>

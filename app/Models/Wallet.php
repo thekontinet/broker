@@ -16,6 +16,13 @@ class Wallet extends \Bavix\Wallet\Models\Wallet
         );
     }
 
+    public function formattedBalance(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => (string) money($this->balance_float, $this->currency)
+        );
+    }
+
     public function asset()
     {
         return $this->belongsTo(Asset::class, 'slug', 'symbol');
