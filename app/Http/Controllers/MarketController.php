@@ -11,7 +11,7 @@ class MarketController extends Controller
 {
     public function index(AssetTypeEnum $type, Request $request)
     {
-        if ($symbol = $this->resolveTradingviewSymbol($request->query('tvwidgetsymbol'))) {
+        if ($symbol = $this->getSymbolFromTradingViewWidgetSymbol($request->query('tvwidgetsymbol'))) {
             $asset = Asset::active()->where('type', $type)->where('symbol', $symbol)->firstOrFail();
 
             return redirect()->route('markets.show', $asset);
@@ -32,9 +32,9 @@ class MarketController extends Controller
         ]);
     }
 
-    private function resolveTradingviewSymbol($symbol)
+    private function getSymbolFromTradingViewWidgetSymbol($symbol)
     {
-        preg_match('/(.*?):(.*?)USDT/i', $symbol, $matches);
+        preg_match('/(.*?):(.*?)(USDT|USD)/i', $symbol, $matches);
 
         // Check if a match was found
         if (! empty($matches[2])) {
