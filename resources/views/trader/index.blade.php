@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="title">Traders</x-slot>
 
-    <div class="grid grid-cols-3 gap-5">
+    <div class="grid lg:grid-cols-3 gap-5">
         @forelse ($traders as $trader)
             <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                 <img src="{{$trader->image}}" alt="profile" class="size-20 mb-4 rounded-full">

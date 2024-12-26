@@ -44,7 +44,6 @@
                     <a class="p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="{{route('page', ['page' => 'about'])}}">About</a>
                     <a class="p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="{{route('page', ['page' => 'terms'])}}">Terms</a>
                     <a class="p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="{{route('page', ['page' => 'policy'])}}">Policy</a>
-                    <a class="p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="{{route('page', ['page' => 'support'])}}">Support</a>
                     <div class="hs-dropdown [--trigger:hover] relative inline-flex">
                         <button id="hs-dropdown-hover-event" type="button" class="hs-dropdown-toggle inline-flex items-center gap-x-2 disabled:opacity-50 disabled:pointer-events-none p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
                             Resources
@@ -71,9 +70,9 @@
                         </div>
                     </div>
                     <div class="border-t border-neutral-600 my-4 md:hidden"></div>
-                    <a class="p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="{{route('markets.index', 'crypto')}}">Markets</a>
-                    <a class="p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="{{ route('wallets.index') }}">Wallets</a>
-                    <a class="p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="{{ route('profile.edit') }}">Profile</a>
+                    <a class="lg:hidden p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="{{route('markets.index', 'crypto')}}">Markets</a>
+                    <a class="lg:hidden p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="{{ route('wallets.index') }}">Wallets</a>
+                    <a class="lg:hidden p-3 ps-px sm:px-3 md:py-4 text-sm text-white hover:text-neutral-300 focus:outline-none focus:text-neutral-300" href="{{ route('profile.edit') }}">Profile</a>
 
                     <div>
                         <a class="group inline-flex items-center gap-x-2 py-2 px-3 bg-[#ff0] font-medium text-sm text-neutral-800 rounded-full focus:outline-none" href="{{ route('register') }}">
@@ -175,7 +174,7 @@
 
                 <div class="grow">
                     <p class="text-sm text-gray-800 dark:text-neutral-200">
-                        By browsing this website, you accept our <a class="inline-flex items-center gap-x-1.5 text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-blue-500" href="#">Cookies Policy</a>
+                        By browsing this website, you accept our <a class="inline-flex items-center gap-x-1.5 text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-blue-500" href="{{route('page', ['page' => 'policy'])}}">Cookies Policy</a>
                     </p>
                 </div>
 

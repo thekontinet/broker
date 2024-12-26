@@ -53,7 +53,7 @@
 
                 <div>
                     <!-- Form -->
-                    <form>
+                    <form action="{{ route('register') }}">
                         <div class="lg:max-w-lg lg:mx-auto lg:me-0 ms-auto slide-in-right">
                             <!-- Card -->
                             <div class="p-4 sm:p-7 flex flex-col bg-white rounded-2xl shadow-lg dark:bg-neutral-900">
