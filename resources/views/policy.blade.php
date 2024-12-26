@@ -1,10 +1,10 @@
 <x-page-layout>
-    <header class="max-w-[85rem] px-4 pt-10 sm:px-6 lg:px-8 mx-auto text-sm  space-y-2 mt-4"">
+    <header class="max-w-4xl px-4 pt-10 sm:px-6 lg:px-8 mx-auto text-sm  space-y-2 mt-4"">
         <h1 class="text-white font-bold text-lg">PRIVACY NOTICE</h1>
         <p class="text-sm">Last updated June 29, 2024</p>
     </header>
 
-    <section class="max-w-[85rem] px-4 pb-10 sm:px-6 lg:px-8 mx-auto text-sm  mt-4 space-y-5">
+    <section class="max-w-4xl px-4 pb-10 sm:px-6 lg:px-8 mx-auto text-sm  mt-4 space-y-5">
         <div class="space-y-2">
             <p>{{config('app.name')}} ("we," "us," or "our") respects your privacy and is committed to protecting your personal information. This Privacy Policy outlines how we collect, use, disclose, and safeguard your information when you visit our website [yourwebsite.com] (the "Website") and use our services ("Services").</p>
 

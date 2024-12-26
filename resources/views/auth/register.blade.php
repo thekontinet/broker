@@ -16,7 +16,7 @@
             <div class="grid gap-y-4">
                 <x-ui.text-input label="First Name" name="first_name" :value="old('first_name')" placeholder="ex. John"/>
                 <x-ui.text-input label="Last Name" name="last_name" :value="old('last_name')" placeholder="ex. Doe"/>
-                <x-ui.text-input type="email" label="Email" name="email" :value="old('email')" placeholder="ex. johndoe@email.com"/>
+                <x-ui.text-input type="email" label="Email" name="email" :value="old('email', request()->query('email'))" placeholder="ex. johndoe@email.com"/>
                 <x-ui.text-input type="password" label="Password" name="password" placeholder="Password"/>
                 <x-ui.text-input type="password" label="Confirm Password" name="password_confirmation" placeholder="Confirm Password"/>
 

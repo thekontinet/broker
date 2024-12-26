@@ -8,6 +8,7 @@ use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PoolController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestVerificationController;
+use App\Http\Controllers\SendEmailController;
 use App\Http\Controllers\StakingController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\TokenSwapController;
@@ -20,6 +21,7 @@ Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/page/{page}', [PageController::class, 'index'])->name('page');
 
 Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
+Route::post('support/email', SendEmailController::class)->name('support.email');
 
 Route::middleware('auth')->group(function () {
     Route::get('markets/t/{type}', [MarketController::class, 'index'])->name('markets.index');
