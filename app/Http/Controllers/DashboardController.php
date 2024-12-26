@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Asset;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -16,6 +17,7 @@ class DashboardController extends Controller
         return view('dashboard', [
             'wallets' => $user->wallets,
             'user' => $user,
+            'assets' => Asset::query()->active()->whereNot('symbol', 'usdt')->get()
         ]);
     }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('duration');
-            $table->integer('min_amount');
+            $table->decimal('min_amount');
             $table->integer('rio');
             $table->json('meta');
             $table->timestamps();
