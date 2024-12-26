@@ -30,7 +30,7 @@ return new class extends Migration
                 ->default(2);
             $table->timestamps();
 
-            $table->unique(['holder_type', 'holder_id', 'slug']);
+            $table->unique(['holder_type', 'holder_id', 'slug'], 'whhs');
         });
 
         Schema::table($this->transactionTable(), function (Blueprint $table) {
