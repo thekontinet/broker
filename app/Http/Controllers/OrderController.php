@@ -40,7 +40,8 @@ class OrderController extends Controller
         }
 
         try {
-            $this->walletService->withdraw($request->input('amount'))
+            $this->walletService
+                ->withdraw($request->input('amount'))
                 ->description("Open $request->type order")
                 ->execute($request->user());
 
@@ -48,7 +49,7 @@ class OrderController extends Controller
 
             return redirect()->back()->with('success', 'Order placed successfully');
         } catch (TransactionError $exception) {
-            return redirect()->back()->withErrors('amount', 'Order cannot be placed: '.$exception->getMessage());
+            return redirect()->back()->withErrors(['amount' => 'error: ' . $exception->getMessage()]);
         }
     }
 

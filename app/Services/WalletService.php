@@ -53,7 +53,7 @@ class WalletService
             return match ($this->type) {
                 'deposit' => $wallet->depositFloat($this->amount, $meta, $this->confirmed),
                 'withdraw' => $wallet->withdrawFloat($this->amount, $meta, $this->confirmed),
-                default => throw new \Exception('invalid transaction type')
+                default => throw new TransactionError('invalid transaction type')
             };
         } catch (InsufficientFunds) {
             throw new TransactionError("You do not have enough $this->currency in your wallet");
