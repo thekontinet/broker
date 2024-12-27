@@ -52,6 +52,7 @@ class InstallationCommand extends Command
             'email' => $this->ask('Email'),
             'password' => $this->secret('Password'),
             'is_admin' => true,
+            'email_verified_at' => now(),
         ];
 
         $validation = Validator::make($credentials, [
