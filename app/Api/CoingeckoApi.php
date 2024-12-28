@@ -14,11 +14,20 @@ class CoingeckoApi
         //
     }
 
-    public function getCoinList(array $ids = [])
+    public function getCoinList(array $ids = [], string $currency = 'USD'): array
     {
-        $ids = implode(',', $ids);
-        $response = Http::get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&ids=$ids");
+        $idsString = implode(',', $ids);
+        $queryArray = ['vs_currency' => $currency];
 
-        return $response->json();
+        if(count($ids)){
+            $queryArray['ids'] = $idsString;
+        }
+
+        $query = http_build_query($queryArray);
+
+        return Http::withoutVerifying()
+            ->get("https://api.coingecko.com/api/v3/coins/markets?$query")
+            ->throw()
+            ->json();
     }
 }
