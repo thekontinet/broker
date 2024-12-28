@@ -47,9 +47,7 @@ class Pool extends Model
 
     public function asset()
     {
-        return $this->belongsTo(Asset::class)
-            ->where('active', true)
-            ->whereNotNull('meta->wallet_address');
+        return $this->belongsTo(Asset::class);
     }
 
     public function stakes()

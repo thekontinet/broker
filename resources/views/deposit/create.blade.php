@@ -29,7 +29,7 @@ $addresses = $assets->pluck('address', 'symbol');
                 <span class="block text-sm mb-2 dark:text-white">Wallet Address</span>
                 <div class="flex justify-between items-center bg-white border border-gray-200 shadow-sm rounded-xl p-3 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                     <span x-text="addresses[currency]" class="text-sm"></span>
-                    <x-ui.secondary-button class="justify-between" data-copyable="rambam" x-init="
+                    <x-ui.secondary-button class="justify-between" x-bind:data-copyable="addresses[currency]" x-init="
                         const clipboard = new Clipboard($el, { text: (trigger) => trigger.getAttribute('data-copyable')});
                         clipboard.on('success', (e) => {
                             $refs.text.textContent = 'Copied'

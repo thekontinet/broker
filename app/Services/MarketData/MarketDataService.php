@@ -3,6 +3,7 @@
 namespace App\Services\MarketData;
 
 use App\Models\Asset;
+use App\Services\CryptoService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -12,42 +13,35 @@ class MarketDataService
     /**
      * Create a new class instance.
      */
-    public function __construct()
+    public function __construct(private CryptoService $provider)
     {
         //
     }
 
     public function getPrice(string $id, string $fiatCurrency = 'USD'): float
     {
-        $prices = $this->getMarketInfo($fiatCurrency);
+        $prices = $this->getMarketInfo();
 
         return $prices[$id]['current_price'];
     }
 
-    public function getMarketInfo(string $fiatCurrency = 'USD')
+    public function getMarketInfo()
     {
-        $coinIdsCollection = Asset::query()->pluck('uid');
-        $ids = $coinIdsCollection->join(',');
-        $key = md5($ids);
-        $data = Cache::remember("coin-market-$key", now()->addMinute(), function () use ($ids, $fiatCurrency) {
-            $response = Http::get("https://api.coingecko.com/api/v3/coins/markets?ids=$ids&vs_currency=$fiatCurrency");
-            $response->throw();
+        $assetIds = Asset::query()->pluck('uid');
+        $key = md5($assetIds->toJson());
 
-            return $response->json();
-        });
-
-        return collect($data)->reduce(function ($acc, $data) {
-            $acc[$data['id']] = $data;
-
-            return $acc;
-        }, []);
+        return Cache::remember(
+            $key, 
+            now()->addMinute(), 
+            fn () => $this->provider->getMarketDataByIds($assetIds->toArray())
+        );
     }
 
     public function getMarketList(): Collection
     {
-        $response = Http::withoutVerifying()->get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd');
+        $marketData = $this->provider->getMarketDataByIds();
 
-        return $response->collect()->map(function ($item) {
+        return collect(array_map(function ($item) {
             return [
                 'id' => $item['id'],
                 'name' => $item['name'],
@@ -58,6 +52,6 @@ class MarketDataService
                     'image' => $item['image'],
                 ],
             ];
-        });
+        }, $marketData));
     }
 }

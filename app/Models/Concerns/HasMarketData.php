@@ -10,6 +10,7 @@ trait HasMarketData
     public function price(): Attribute
     {
         try {
+            /** @var MarketDataService $marketDataService */
             $marketDataService = resolve(MarketDataService::class);
 
             return new Attribute(

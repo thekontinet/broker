@@ -15,22 +15,12 @@ class CryptoService
         //
     }
 
-    public function Sync()
+    public function getMarketDataByIds(array $ids = [])
     {
-        $supportedCryptos = collect(config('currencies.crypto'));
-        $coins = $this->api->getCoinList($supportedCryptos->pluck('id')->toArray());
-
-        foreach ($coins as $coin) {
-            Currency::updateOrCreate(
-                ['symbol' => $coin['symbol']],
-                [
-                    'name' => strtolower($coin['name']),
-                    'type' => 'crypto',
-                    'price' => $coin['current_price'],
-                    'meta' => $coin,
-                    'status' => false,
-                ]
-            );
-        }
+        $marketData =  $this->api->getCoinList($ids);
+        return array_reduce($marketData, function ($value, $data) {
+            $value[$data['id']] = $data;
+            return $value;
+        }, []);
     }
 }
